@@ -19,22 +19,6 @@ Modules installation
 - multer
 ---create error page
 
-
-import type { Config } from 'tailwindcss'
-import typography from '@tailwindcss/typography'
-
-export default <Partial<Config>>{
-  theme: {},
-  content: [],
-  plugins: [typography()],
-}
-
-
-export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss'],
-  tailwindcss: {
-    exposeConfig: true,
-    viewer: true,
-    // and more...
-  }
-})
+---------------------------------------------------------
+- get userId,metadata
+- If user has no metadata updated it(set role)

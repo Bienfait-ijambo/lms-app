@@ -7,8 +7,13 @@ definePageMeta({
 
 </script>
 <template>
-    <div >
-   
-    <h1>signup</h1>
+  <div class="bg-white h-screen">
+    <div class="flex justify-between mt-20">
+      <div></div>
+      <div>
+          <SignUp />
+      </div>
+      <div></div>
     </div>
-  </template>
+  </div>
+</template>

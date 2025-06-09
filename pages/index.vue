@@ -1,14 +1,6 @@
-
-
-<script setup>
-
-
-
-
-</script>
+<script setup></script>
 <template>
-    <div >
-   
+  <div>
     <h1>Welcome page</h1>
-    </div>
-  </template>
+  </div>
+</template>
