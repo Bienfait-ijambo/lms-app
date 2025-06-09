@@ -1,13 +1,12 @@
-
-
 <script setup>
-
-definePageMeta({
-    layout:"admin"
-})
 
  
  const { isSignedIn, user, isLoaded } = useUser();
+
+
+ function checkUserRole(){
+    const 
+ }
  async function updateRole(){
     const userId=user.value?.id
        const { data } = await useFetch("/api/auth/update-role", {
@@ -17,13 +16,11 @@ definePageMeta({
         });
         console.log(data)
  }
-
 </script>
 <template>
-    <div >
-{{data}}
-   {{ user?.publicMetadata }}
-    <h1 @click="updateRole">Dashboard</h1>
-     <UserButton />
+    <div class="bg-slate-200 h-screen">
+
+        <!-- slot -->
+        <NuxtPage />
     </div>
   </template>

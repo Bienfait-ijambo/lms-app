@@ -5,7 +5,9 @@ import { USER_ROLE } from '../types/user-role'
 export default defineEventHandler(async (event) => {
     try {
 
-        const { userId } = readBody(event)
+        const query= getQuery(event)
+        const userId=query?.userId as string
+        console.log(userId)
 
         const config = useRuntimeConfig()
         const secretKey = config.NUXT_CLERK_SECRET_KEY
@@ -17,6 +19,10 @@ export default defineEventHandler(async (event) => {
                 role: USER_ROLE.LEANER
             },
         })
+
+        return{
+            message:"user role updated successfully !"
+        }
 
     } catch (error) {
         throw createError({

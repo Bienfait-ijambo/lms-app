@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig:{
-      NUXT_CLERK_SECRET_KEY: process.env.NUXT_CLERK_SECRET_KEY,
+      NUXT_CLERK_SECRET_KEY:process.env.NUXT_CLERK_SECRET_KEY,
   },
   
    tailwindcss: {
