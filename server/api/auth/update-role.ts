@@ -1,5 +1,5 @@
 import { createClerkClient } from '@clerk/backend'
-import { USER_ROLE } from '../types/user-role'
+import { USER_ROLE } from '../../../utils/types/user-role'
 
 
 export default defineEventHandler(async (event) => {
