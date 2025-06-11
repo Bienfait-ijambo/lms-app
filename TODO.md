@@ -22,3 +22,25 @@ Modules installation
 ---------------------------------------------------------
 - get userId,metadata
 - If user has no metadata updated it(set role)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ npx prisma init : initialize prisma client
+ npx prisma generate : generate prisma client
+
+ 
+ migration : npx prisma migrate dev --name switch-to-uuid

@@ -12,7 +12,7 @@ definePageMeta({
 <template>
     <div >
 
-    <h1>Dashboard</h1>
+    <h1>courses</h1>
     
     </div>
   </template>

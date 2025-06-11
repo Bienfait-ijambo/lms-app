@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-    layout:"check-auth"
+    layout:"check-auth",
+    middleware:['check-role']
 })
 
 

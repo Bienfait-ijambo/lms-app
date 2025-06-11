@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
         const query= getQuery(event)
         const userId=query?.userId as string
-        console.log(userId)
+    
 
         const config = useRuntimeConfig()
         const secretKey = config.NUXT_CLERK_SECRET_KEY
