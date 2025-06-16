@@ -1,5 +1,5 @@
 import prisma from "~/lib/prisma";
-import { generateSlug } from "~/utils/helpers/generateSlug";
+import { generateSlug } from "~/utils/generateSlug";
 import { updateCourseSchema } from "./modules/validateCourseInput";
 
 export default defineEventHandler(async (event) => {

@@ -1,4 +1,4 @@
-import { showServerError, successMsg } from "~/utils/toast/toast-notification";
+import { showServerError, successMsg } from "~/utils/toast-notification";
 import { useFetchCourses } from "./useFetchCourses";
 
 

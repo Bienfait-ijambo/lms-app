@@ -6,8 +6,33 @@ const props = defineProps(["categories"]);
 
 const emit=defineEmits(['editCategory'])
 
+const categoryStore = useCategoryStore();
+const { fetchLoading } = storeToRefs(categoryStore);
+
+
+async function refreshTable(){
+  await categoryStore.fetchCategories()
+}
+
 </script>
 <template>
+
+  <div class="flex  justify-between mb-4 mt-4">
+          <button
+          @click="refreshTable"
+          title="Refresh table"
+            class="hover:bg-slate-200 text-gray-900 font-bold py-1 px-2 cursor-pointer rounded flex items-center gap-2 "
+          >
+            <LoadingIcon v-if="fetchLoading"   />
+
+            <RefreshIcon v-else  />
+          </button>
+
+         
+        
+          <BaseBtn   :class="'primary'" label="Create" @click="categoryStore.toggleModal" />
+      </div>
+
   <table class="bg-white rounded-md w-full shadow-sm border border-gray-300">
     <thead>
       <tr class="bg-gray-100 text-left">

@@ -21,9 +21,11 @@ await courseStore.fetchCourses()
     </ClientOnly>
   
     <div class="flex justify-between mb-4 mt-4">
+
       <h1 class="text-xl " >Courses</h1>
-      
-      <BaseBtn   :class="'primary'" label="Create" @click="courseStore.toggleModal" />
+
+  
+
     </div>
 
     <CourseTable :courses="serverData?.courses" />

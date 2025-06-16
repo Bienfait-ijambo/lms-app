@@ -1,5 +1,5 @@
 
-import { USER_ROLE } from "~/utils/types/user-role";
+import { USER_ROLE } from "~/utils/user-role";
 
 
 export default defineNuxtRouteMiddleware(to => {

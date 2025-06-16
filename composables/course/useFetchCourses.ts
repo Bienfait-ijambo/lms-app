@@ -38,6 +38,6 @@ export function useFetchCourses(){
     }
 
     return{
-        fetchCourses,fetchLoading,serverData
+        fetchCourses,fetchLoading,serverData,search
     }
 }

@@ -28,7 +28,7 @@ function editCategory(category){
     <div class="flex justify-between mb-4 mt-4">
       <h1 class="text-xl " >Categories</h1>
       
-      <BaseBtn   :class="'primary'" label="Create" @click="categoryStore.toggleModal" />
+     
     </div>
 
     <CategoryTable @editCategory="editCategory" :categories="serverData?.categories" />
