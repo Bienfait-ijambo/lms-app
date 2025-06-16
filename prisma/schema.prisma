@@ -2,16 +2,39 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
- provider = "postgres"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgcrypto]
 }
 
-
 model Category {
-  id     String     @id @default(uuid())
-  name   String  @unique
+  id      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name    String   @unique
+  courses Course[]
+}
+
+model Course {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title      String
+  // foreign key
+  categoryId String   @db.Uuid
+  userId     String
+  slug       String
+  description String?
+  price      Decimal? @db.Decimal(10, 2)
+  imageUrl   String?
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Chapter {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title    String
+  courseId String  @db.Uuid
+  slug     String
+  videoUrl String?
 }

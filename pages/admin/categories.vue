@@ -1,18 +1,36 @@
-
-
 <script setup>
-
 definePageMeta({
-    layout:"admin"
-})
+  layout: "admin",
+});
 
+const categories = ref([{ id: 1, name: "JavaScript" }]);
+const categoryStore = useCategoryStore();
+const { categoryInput,edit,serverData,showModal } = storeToRefs(categoryStore);
+
+await categoryStore.fetchCategories()
+
+function editCategory(category){
  
+  categoryInput.value=category
+  edit.value=true
+  showModal.value=true
+}
+
 
 </script>
 <template>
-    <div >
-
-    <h1>categories</h1>
+  <div class="h-screen">
     
+    <ClientOnly>
+      <CategoryModal />
+    </ClientOnly>
+  
+    <div class="flex justify-between mb-4 mt-4">
+      <h1 class="text-xl " >Categories</h1>
+      
+      <BaseBtn   :class="'primary'" label="Create" @click="categoryStore.toggleModal" />
     </div>
-  </template>
+
+    <CategoryTable @editCategory="editCategory" :categories="serverData?.categories" />
+  </div>
+</template>

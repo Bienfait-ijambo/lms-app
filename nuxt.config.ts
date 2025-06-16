@@ -13,8 +13,12 @@ export default defineNuxtConfig({
   modules: [
     '@clerk/nuxt',
     '@nuxtjs/tailwindcss',
-    '@prisma/nuxt'
+    '@prisma/nuxt',
+    '@pinia/nuxt'
   ],
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
 
   runtimeConfig:{
       NUXT_CLERK_SECRET_KEY:process.env.NUXT_CLERK_SECRET_KEY,

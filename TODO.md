@@ -1,7 +1,7 @@
 installed
  '@nuxt/image',
     '@unlok-co/nuxt-stripe',
-'@pinia/nuxt',
+,
 
 - project installation
 
@@ -9,7 +9,7 @@ Modules installation
 
 '@nuxt/ui',
 '@nuxt/image',
-'@pinia/nuxt',
+
 '@unlok-co/nuxt-stripe'
 ,'@clerk/nuxt'
 
@@ -37,10 +37,7 @@ Modules installation
 
 
 
-
-
  npx prisma init : initialize prisma client
  npx prisma generate : generate prisma client
-
- 
  migration : npx prisma migrate dev --name switch-to-uuid
+npx prisma migrate reset

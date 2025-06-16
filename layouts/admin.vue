@@ -10,10 +10,10 @@ const toggleSidebar = () => {
 
 </script>
 <template>
-  <Protect>
+  <!-- <Protect>
     <template #fallback>
       <RedirectToLogin />
-    </template>
+    </template> -->
      <div class="flex h-screen bg-gray-100">
     <!-- Sidebar -->
     <aside
@@ -77,7 +77,7 @@ const toggleSidebar = () => {
     </div>
   </div>
 
-  </Protect>
+  <!-- </Protect> -->
 </template>
 <style scoped>
 .fade-enter-active,
