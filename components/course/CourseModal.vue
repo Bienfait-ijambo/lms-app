@@ -6,7 +6,7 @@ import { required, email } from "@vuelidate/validators";
 
 
 const courseStore=useCourseStore()
-const {courseInput,saveLoading,showModal}=storeToRefs(courseStore)
+const {courseInput,saveLoading,showModal,edit}=storeToRefs(courseStore)
 
 const categoryStore=useCategoryStore()
 const {serverData}=storeToRefs(categoryStore)
@@ -14,7 +14,12 @@ const {serverData}=storeToRefs(categoryStore)
 const rules = {
   title: { required }, 
   categoryId: { required }, 
-  userId:{required}
+  userId:{required},
+
+  price:{required},
+  description:{required}
+
+
 
 };
 
@@ -31,13 +36,16 @@ async function submitInput() {
 <template>
   <BaseModal :show="showModal">
     <template #title>
-      <h1 class="text-xl mb-4">Create course</h1>
+      <h1 class="text-xl mb-4">{{edit?'Update':'Create'}} course</h1>
     </template>
     <template #body>
       <FormError :errors="v$.title.$errors">
          <BaseInput class="mb-2" v-model="courseInput.title" :placeholder="'Title'" />
       </FormError>
 
+        <FormError :errors="v$.price.$errors" v-if="edit">
+         <BaseInput class="mb-2" v-model="courseInput.price" :placeholder="'Price'" />
+      </FormError>
   
       <FormError :errors="v$.title.$errors">
          <select  v-model="courseInput.categoryId"
@@ -59,7 +67,7 @@ async function submitInput() {
       <BaseBtn
         :class="'primary'"
         @click="submitInput"
-        :label="'Create'"
+        :label="edit?'Update':'Create'"
         :loading="saveLoading"
       />
     </template>

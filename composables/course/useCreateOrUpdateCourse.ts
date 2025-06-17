@@ -8,6 +8,7 @@ export function useCreateOrUpdateCourse(){
     
     const courseInput = ref({ id: null, title: "", categoryId: null, userId: "" });
     const saveLoading = ref(false)
+    const edit=ref(false)
     const {fetchCourses}=useFetchCourses()
     
 
@@ -16,7 +17,7 @@ export function useCreateOrUpdateCourse(){
 
     function toggleModal() {
         //  categoryInput.value = {} as any
-        //  edit.value=false
+         edit.value=false
         courseInput.value.userId = (user.value?.id as string)
         showModal.value = !showModal.value
     }
@@ -47,6 +48,7 @@ export function useCreateOrUpdateCourse(){
             createOrUpdate,
             courseInput,
             saveLoading,
+            edit,
             toggleModal,
             showModal
 

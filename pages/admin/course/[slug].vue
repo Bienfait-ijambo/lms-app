@@ -1,25 +1,38 @@
 <script setup>
 definePageMeta({ layout: "admin" });
 
-const route=useRoute()
+const route = useRoute();
 
-const courseStore=useCourseStore()
-const {singleCourseData}=storeToRefs(courseStore)
+const courseStore = useCourseStore();
+const { singleCourseData,edit } = storeToRefs(courseStore);
 
-await courseStore.fetchSingleCourse(route?.params?.slug)
+const categoryStore=useCategoryStore()
+await categoryStore.fetchCategories()
 
+await courseStore.fetchSingleCourse(route?.params?.slug);
+
+
+function showEditModal(){
+    edit.value=true
+    courseStore.toggleModal()
+
+}
 </script>
 
 <template>
   <div>
+
+ <ClientOnly>
+      <CourseModal />
+    </ClientOnly>
+  
     <div class="mb-4 mt-4">
-        {{singleCourseData}}
       <h2 class="text-xl font-semibold text-gray-500">Edit course</h2>
     </div>
 
     <div class="flex gap-4 mb-8">
       <!-- form -->
-      <div class="flex justify-between w-[50%] bg-white rounded-md p-4">
+      <div class="flex w-[65%] bg-white rounded-md p-4">
         <div class="px-2">
           <img
             width="84"
@@ -28,14 +41,14 @@ await courseStore.fetchSingleCourse(route?.params?.slug)
             alt=""
           />
         </div>
-        <div class="flex flex-col px-2">
-          <div class="flex justify-between">
+        <div class="flex flex-col px-2 flex-1">
+          <div class="flex justify-between ">
             <h1 class="text-xl font-medium text-gray-800">
-              Title : {{singleCourseData?.course?.title}}
+              Title : {{ singleCourseData?.course?.title }}
             </h1>
-
             <div class="flex">
               <button
+              @click="showEditModal"
                 class="hover:bg-slate-200 text-gray-900 font-bold px-2 cursor-pointer rounded flex items-center"
               >
                 <EditIcon />
@@ -50,12 +63,17 @@ await courseStore.fetchSingleCourse(route?.params?.slug)
           </div>
 
           <p class="text-sm text-gray-500 mb-4">
-            Category :  - Price : {{singleCourseData?.course?.price}} $
+            Category : {{ singleCourseData?.course?.category?.name }} - Price :
+            {{
+              singleCourseData?.course?.price
+                ? "-"
+                : singleCourseData?.course?.price
+            }}
+            $
           </p>
           <p class="text-sm text-gray-500 mb-2">
-           {{singleCourseData?.course?.description}}
+            {{ singleCourseData?.course?.description }}
           </p>
-        
         </div>
       </div>
 
