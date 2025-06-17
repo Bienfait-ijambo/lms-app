@@ -11,6 +11,8 @@ export function useFetchCourses(){
     const fetchLoading = ref(false)
     const serverData = ref({})
 
+    const singleCourseData=ref({})
+
     
     async function fetchCourses() {
         try {
@@ -37,7 +39,28 @@ export function useFetchCourses(){
 
     }
 
+
+    async function fetchSingleCourse(slug:string){
+         try {
+            fetchLoading.value = true
+            const { data } = await useFetch('/api/admin/courses/single-course', {
+
+                query: {
+                    slug: slug,
+                  
+                }
+            })
+            singleCourseData.value = data.value as any
+          
+            fetchLoading.value = false
+
+        } catch (error) {
+            fetchLoading.value = false
+        }
+
+    }
+
     return{
-        fetchCourses,fetchLoading,serverData,search
+        fetchCourses,fetchLoading,serverData,search,fetchSingleCourse,singleCourseData
     }
 }

@@ -11,6 +11,12 @@ const categoryStore=useCategoryStore()
 await categoryStore.fetchCategories()
 await courseStore.fetchCourses()
 
+const router=useRouter()
+
+function editCourse(course){
+  router.push('/admin/course/'+course?.slug)
+}
+
 
 </script>
 <template>
@@ -28,6 +34,6 @@ await courseStore.fetchCourses()
 
     </div>
 
-    <CourseTable :courses="serverData?.courses" />
+    <CourseTable @editCourse="editCourse" :courses="serverData?.courses" />
   </div>
 </template>

@@ -11,6 +11,7 @@ const { isSignedIn, user, isLoaded } = useUser();
     <template #fallback>
       <RedirectToLogin />
     </template>
+     <NuxtLoadingIndicator />
     <div class="flex  h-screen bg-gray-100 ">
       <!-- Sidebar -->
       <aside
