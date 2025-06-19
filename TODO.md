@@ -41,3 +41,11 @@ Modules installation
  npx prisma generate : generate prisma client
  migration : npx prisma migrate dev --name switch-to-uuid
 npx prisma migrate reset
+
+
+
+
+TO DO LIST
+_______________
+
+- add option chaining in formError component

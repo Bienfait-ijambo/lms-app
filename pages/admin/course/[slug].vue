@@ -1,21 +1,26 @@
-<script setup>
+<script setup >
 definePageMeta({ layout: "admin" });
 
 const route = useRoute();
 
 const courseStore = useCourseStore();
-const { singleCourseData,edit } = storeToRefs(courseStore);
+const { singleCourseData,edit,showModal,courseInput } = storeToRefs(courseStore);
 
 const categoryStore=useCategoryStore()
 await categoryStore.fetchCategories()
 
 await courseStore.fetchSingleCourse(route?.params?.slug);
 
+function showEditModal(id){
 
-function showEditModal(){
-    edit.value=true
-    courseStore.toggleModal()
+  if(typeof id!=='undefined'){
+      edit.value=true
+      courseInput.value.id=id
+    showModal.value=true
+    courseStore.appendUserIdPropValue()
 
+  }
+  
 }
 </script>
 
@@ -41,6 +46,7 @@ function showEditModal(){
             alt=""
           />
         </div>
+        {{ edit }}
         <div class="flex flex-col px-2 flex-1">
           <div class="flex justify-between ">
             <h1 class="text-xl font-medium text-gray-800">
@@ -48,7 +54,7 @@ function showEditModal(){
             </h1>
             <div class="flex">
               <button
-              @click="showEditModal"
+              @click="showEditModal(singleCourseData?.course?.id)"
                 class="hover:bg-slate-200 text-gray-900 font-bold px-2 cursor-pointer rounded flex items-center"
               >
                 <EditIcon />
