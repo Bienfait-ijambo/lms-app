@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
         if (!result.success) {
             throw createError({
                 message: "Validation Failed",
-                validationErrors: result.error?.flatten()?.fieldErrors,
+                data: result.error?.flatten()?.fieldErrors,
             } as any);
         }
 
@@ -41,7 +41,8 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         throw createError({
             message: "failed to create category ",
-            statusCode: 500
+            statusCode: 500,
+            data:error
         })
     }
 })

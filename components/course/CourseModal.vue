@@ -14,7 +14,6 @@ const rules = {
   userId: { required },
 
   price: { required },
-  description: { required },
 };
 
 
@@ -37,7 +36,7 @@ async function submitInput() {
       <h1 class="text-xl mb-4">{{ edit ? "Update" : "Create" }} course</h1>
     </template>
     <template #body>
-      {{ courseInput }}
+      
       <FormError :errors="v$.title.$errors">
         <BaseInput
           class="mb-2"
@@ -45,14 +44,15 @@ async function submitInput() {
           :placeholder="'Title'"
         />
       </FormError>
-<!-- 
+
       <FormError v-if="edit" :errors="v$?.price?.$errors" >
         <BaseInput
           class="mb-2"
+        
           v-model="courseInput.price"
           :placeholder="'Price'"
         />
-      </FormError> -->
+      </FormError>
 
       <FormError :errors="v$.title.$errors" class="mb-2">
         <select
@@ -70,14 +70,6 @@ async function submitInput() {
         </select>
       </FormError>
  
-        <FormError  :errors="v$?.description?.$errors" v-if="edit" >
-        <textarea
-          v-model="courseInput.description"
-          placeholder="Description"
-          class="peer w-full pl-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-200 transition-all"
-        >
-        </textarea>
-      </FormError>
       
     </template>
     <template #footer>

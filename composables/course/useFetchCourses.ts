@@ -29,8 +29,9 @@ export function useFetchCourses(){
             limit.value = data.value?.metadata.limit as number
             page.value = data.value?.metadata.page as number
 
-
             fetchLoading.value = false
+           
+
 
         } catch (error) {
             fetchLoading.value = false
@@ -53,6 +54,8 @@ export function useFetchCourses(){
             singleCourseData.value = data.value as any
           
             fetchLoading.value = false
+            return data.value
+           
 
         } catch (error) {
             fetchLoading.value = false

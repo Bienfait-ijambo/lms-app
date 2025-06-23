@@ -9,11 +9,14 @@ definePageMeta({
  
  const { isSignedIn, user, isLoaded } = useUser();
  
-
 </script>
 <template>
-    <div >
-    <h1 >Home page of leaner</h1>
-     <UserButton />
-    </div>
+   <div>
+  <!-- Single Course Card (Top) -->
+   welcome page
+  
+  
+</div>
+
+
   </template>

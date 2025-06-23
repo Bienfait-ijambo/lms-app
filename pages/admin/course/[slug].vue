@@ -1,150 +1,152 @@
-<script setup >
+<script setup>
 definePageMeta({ layout: "admin" });
 
 const route = useRoute();
 
 const courseStore = useCourseStore();
-const { singleCourseData,edit,showModal,courseInput } = storeToRefs(courseStore);
+const { singleCourseData, edit, showModal, courseInput, saveLoading, } =
+  storeToRefs(courseStore);
 
-const categoryStore=useCategoryStore()
-await categoryStore.fetchCategories()
+const categoryStore = useCategoryStore();
+await categoryStore.fetchCategories();
 
-await courseStore.fetchSingleCourse(route?.params?.slug);
+  courseStore.fetchSingleCourse(route?.params?.slug).then((data)=>{
+  courseInput.value.description = data?.course?.description
+  courseInput.value.id = data?.course?.id
 
-function showEditModal(id){
+})
 
-  if(typeof id!=='undefined'){
-      edit.value=true
-      courseInput.value.id=id
-    showModal.value=true
-    courseStore.appendUserIdPropValue()
-
+function showEditModal(id) {
+  if (typeof id !== "undefined") {
+    edit.value = true;
+    courseInput.value.id = id;
+    showModal.value = true;
+    courseStore.appendUserIdPropValue();
   }
-  
 }
+
+
 </script>
 
 <template>
-  <div>
-
- <ClientOnly>
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <!-- Single Course Card (Top) -->
+       <ClientOnly>
       <CourseModal />
+      <UploadImageModal />
+
     </ClientOnly>
-  
-    <div class="mb-4 mt-4">
-      <h2 class="text-xl font-semibold text-gray-500">Edit course</h2>
-    </div>
+    <div class="grid grid-cols-12 gap-8 mb-10">
+      <div
+        class="col-span-12 bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-center gap-6"
+      >
+     
+        <!-- Thumbnail -->
+        <img
+          src="/miro-clone.jpg"
+          alt="Course Thumbnail"
+          class="w-full md:w-64 h-40 object-cover rounded-lg"
+        />
 
-    <div class="flex gap-4 mb-8">
-      <!-- form -->
-      <div class="flex w-[65%] bg-white rounded-md p-4">
-        <div class="px-2">
-          <img
-            width="84"
-            class="rounded-md"
-            src="./../../../public/miro-clone.jpg"
-            alt=""
-          />
-        </div>
-        {{ edit }}
-        <div class="flex flex-col px-2 flex-1">
-          <div class="flex justify-between ">
-            <h1 class="text-xl font-medium text-gray-800">
-              Title : {{ singleCourseData?.course?.title }}
-            </h1>
-            <div class="flex">
-              <button
-              @click="showEditModal(singleCourseData?.course?.id)"
-                class="hover:bg-slate-200 text-gray-900 font-bold px-2 cursor-pointer rounded flex items-center"
-              >
-                <EditIcon />
-              </button>
-
-              <button
-                class="hover:bg-slate-200 text-gray-900 font-bold py-1 px-2 cursor-pointer rounded flex items-center gap-2"
-              >
-                <CameraIcon />
-              </button>
-            </div>
+        <!-- Info -->
+        <div class="flex-1">
+          <h1 class="text-2xl font-bold text-gray-800 mb-2">
+            {{ singleCourseData?.course?.title }}
+          </h1>
+          <p class="text-gray-600 mb-4">
+            <span class="font-medium">user-name</span>
+          </p>
+          <div class="flex items-center gap-4 text-sm text-gray-500">
+             <span>$ {{ singleCourseData?.course?.price }}</span>
+            <span>💻 12 Chapiters</span>
+            <span>⏱ 4h 30m</span>
           </div>
 
-          <p class="text-sm text-gray-500 mb-4">
-            Category : {{ singleCourseData?.course?.category?.name }} - Price :
-            {{
-              singleCourseData?.course?.price
-                ? "-"
-                : singleCourseData?.course?.price
-            }}
-            $
-          </p>
-          <p class="text-sm text-gray-500 mb-2">
-            {{ singleCourseData?.course?.description }}
-          </p>
+          <div class="flex items-center gap-2 text-sm text-gray-500 mt-2">
+            <button
+            title="Edit course"
+            @click="showEditModal( singleCourseData?.course?.id)"
+              class="hover:bg-slate-200 text-gray-900 font-bold px-2 py-2 cursor-pointer rounded flex items-center"
+            >
+              <EditIcon />
+            </button>
+
+            <button
+             title="Upload course image"
+            @click="courseStore.toggleImageModal"
+              class="hover:bg-slate-200 text-gray-900 font-bold py-2 px-2 cursor-pointer rounded flex items-center gap-2"
+            >
+              <CameraIcon />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description + Chapters Grid -->
+    <div class="grid grid-cols-12 gap-8">
+      <!-- Course Description -->
+      <div class="col-span-12 lg:col-span-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Description</h2>
+          <div class="mb-2">
+          
+            <ClientOnly>
+              <rich-editor
+                :value="courseInput.description"
+                @input="(event) => (courseInput.description = event)"
+              />
+            </ClientOnly>
+          </div>
+
+          <div class="flex justify-end">
+            <BaseBtn
+              @click="courseStore.updateCourseDescription"
+              :class="'primary'"
+              :label="'Update'"
+              :loading="saveLoading"
+            />
+          </div>
         </div>
       </div>
 
-      <!-- end form  -->
-    </div>
-    <!-- Chapters Section -->
-    <div class="space-y-4 w-[65%]">
-      <div class="flex justify-between items-center mb-2 mt-4">
-        <h2 class="text-xl font-semibold text-gray-500">Chapters</h2>
-
-        <BaseBtn :class="'primary'" label=" + Add Chapter" />
-      </div>
-
-      <!-- Chapter List -->
-      <div class="space-y-3">
-        <!-- Chapter Item -->
+      <!-- Course Chapters -->
+      <div class="col-span-12 lg:col-span-4">
         <div
-          class="bg-white shadow-md rounded-lg p-4 mb-2 flex justify-between items-center"
+          class="bg-white p-6 rounded-xl shadow-sm h-full overflow-y-auto max-h-[500px]"
         >
-          <div class="flex gap-3">
-            <div class="px-2">
-              <img
-                width="84"
-                class="rounded-md"
-                src="./../../../public/miro-clone.jpg"
-                alt=""
-              />
-            </div>
-            <div>
-              <h3 class="text-lg font-medium text-gray-800">
-                Chapter 1: Introduction
-              </h3>
-            </div>
-          </div>
-          <div class="flex space-x-2">
-            <button class="text-blue-600 hover:underline text-sm">
-              Add video
-            </button>
-            <button class="text-red-600 hover:underline text-sm">Delete</button>
-          </div>
-        </div>
-        <div
-          class="bg-white shadow-md rounded-lg p-4 mb-2 flex justify-between items-center"
-        >
-          <div class="flex gap-3">
-            <div class="px-2">
-              <img
-                width="84"
-                class="rounded-md"
-                src="./../../../public/miro-clone.jpg"
-                alt=""
-              />
-            </div>
-            <div>
-              <h3 class="text-lg font-medium text-gray-800">
-                Chapter 1: Introduction
-              </h3>
-            </div>
-          </div>
-          <div class="flex space-x-2">
-            <button class="text-blue-600 hover:underline text-sm">
-              Add video
-            </button>
-            <button class="text-red-600 hover:underline text-sm">Delete</button>
-          </div>
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Chapitres</h2>
+          <ul class="space-y-4">
+            <li class="flex justify-between items-center">
+              <span class="text-gray-700 text-sm"
+                >1. Introduction au cours</span
+              >
+              <span
+                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
+                >Add video</span
+              >
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-gray-700 text-sm"
+                >2. Introduction au cours</span
+              >
+              <span
+                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
+                >Add video</span
+              >
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-gray-700 text-sm"
+                >3. Introduction au cours</span
+              >
+              <span
+                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
+                >Add video</span
+              >
+            </li>
+
+            <!-- Repeat for more chapters -->
+          </ul>
         </div>
       </div>
     </div>

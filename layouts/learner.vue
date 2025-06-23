@@ -1,11 +1,11 @@
 <script setup></script>
 <template>
-    <Protect>
+  <!-- <Protect>
     <template #fallback>
       <RedirectToLogin />
-    </template>
+    </template> -->
     <div class="bg-slate-200 h-screen">
       <slot />
     </div>
-  </Protect>
-  </template>
+  <!-- </Protect> -->
+</template>

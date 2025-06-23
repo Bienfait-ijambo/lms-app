@@ -1,15 +1,15 @@
 import prisma from "~/lib/prisma";
 import { generateSlug } from "~/utils/generateSlug";
-import { updateCourseSchema } from "./modules/validateCourseInput";
 import { ZodError } from "zod";
+import { updateCourseDescriptionSchema } from "./modules/validateCourseInput";
 
 export default defineEventHandler(async (event) => {
     try {
 
-        const { id,title,categoryId,price,description } = await readBody(event)
+        const { id,description } = await readBody(event)
 
 
-        const result = updateCourseSchema.safeParse({ id,title,categoryId,price,description });
+        const result = updateCourseDescriptionSchema.safeParse({ id,description });
 
         if (!result.success) {
             throw createError({
@@ -19,27 +19,23 @@ export default defineEventHandler(async (event) => {
             } as any);
         }
 
-        const slug=generateSlug(title)
         const course = await prisma.course.update({
             where:{
                 id:id
             },
             data: {
-                title: title,
-                categoryId: categoryId,
-                price: price,
-                // description: description,
-                slug:slug
+              
+                description: description,
             },
         });
 
 
-        return { message: "course  updated successfully", statusCode: 201, course }
+        return { message: "Course  descripton updated successfully", statusCode: 201, course }
 
     } catch (error) {
         
     throw createError({
-            message: "failed to update a course ",
+            message: "failed to update a course description ",
             statusCode: 500,
             data:error
         })

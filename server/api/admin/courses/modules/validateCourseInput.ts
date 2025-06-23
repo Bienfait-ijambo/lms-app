@@ -21,23 +21,35 @@ export const updateCourseSchema = z.object({
   }),
   title: z.string({
     required_error: "Title is required",
-    invalid_type_error: "must be in letters",
-  }).min(10, "Minimum 10 characters").max(100,'Maximum 100 characters'),
+    invalid_type_error: " Title must be in letters",
+  }).min(10, "Title Minimum 10 characters").max(100,'Title Maximum 100 characters'),
 
 
    price: z.number({
     required_error: "Price is required",
-    invalid_type_error: "must be a number",
+    invalid_type_error: " Price must be a number",
   }).positive("Price should be greater than 0"),
 
 
-  description: z.string({
-    required_error: "Description is required",
-    invalid_type_error: "must be in letters",
-  }).min(200, "Minimum 200 characters").max(500,'Maximum 500 characters'),
-
+ 
   categoryId: z.string({
     required_error: "categoryId is required",
   }),
+ 
+});
+
+
+
+
+export const updateCourseDescriptionSchema = z.object({
+ id: z.string({
+    required_error: "id is required",
+  }),
+ 
+  description: z.string({
+    required_error: "Description is required",
+    invalid_type_error: "Description must be in letters",
+  }).min(50, "Description Minimum 50 characters").max(500,'Description Maximum 500 characters'),
+
  
 });

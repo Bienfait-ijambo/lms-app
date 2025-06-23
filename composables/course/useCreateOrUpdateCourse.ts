@@ -6,10 +6,12 @@ import { useFetchCourses } from "./useFetchCourses";
 export function useCreateOrUpdateCourse(){
 
     
-    const courseInput = ref({ id: null, title: "",price:"",description:"", categoryId: null, userId: "" });
+
     const saveLoading = ref(false)
     const edit=ref(false)
     const {fetchCourses}=useFetchCourses()
+      const courseInput = ref({ id: null, title: "",price:"",description:"", categoryId: null, userId: "" });
+    
     
 
     const showModal = ref(false)
@@ -27,17 +29,50 @@ export function useCreateOrUpdateCourse(){
     }
 
 
+
+    async function updateCourseDescription() {
+    
+            try {
+             
+                saveLoading.value = true
+              
+                const {description,id,...restInput}=courseInput.value
+                
+                const result = await $fetch('/api/admin/courses/update-description', {
+                    method: 'POST',
+                    body: JSON.stringify({id:id,description:description})
+                   
+
+                })
+                
+                successMsg(result?.message)
+                saveLoading.value = false
+    
+            } catch (error) {
+            
+                saveLoading.value = false
+                showValidationErrors((error as Error))
+    
+            }
+        }
+
+
         async function createOrUpdate() {
     
             try {
                 const endpoint=edit.value?'/api/admin/courses/update':'/api/admin/courses/create'
     
                 saveLoading.value = true
+              
+                const {price,...restInput}=courseInput.value
+                
                 const result = await $fetch(endpoint, {
                     method: 'POST',
-                    body: JSON.stringify(courseInput.value)
+                    body: JSON.stringify({price:parseInt(price),...restInput})
+                   
+
                 })
-                courseInput.value = {} as any
+                // courseInput.value = {} as any
                 edit.value=false
                 showModal.value=false
                 await fetchCourses()
@@ -45,8 +80,10 @@ export function useCreateOrUpdateCourse(){
                 saveLoading.value = false
     
             } catch (error) {
+            //  const serverError=error?.data?.data?.data
+            //  console.log(serverError)
                 saveLoading.value = false
-                showServerError((error as Error)?.message)
+                showValidationErrors((error as Error))
     
             }
         }
@@ -58,7 +95,8 @@ export function useCreateOrUpdateCourse(){
             edit,
             toggleModal,
             showModal,
-            appendUserIdPropValue
+            appendUserIdPropValue,
+            updateCourseDescription
 
         }
 }
