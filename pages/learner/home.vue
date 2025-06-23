@@ -1,22 +1,13 @@
-
-
 <script setup>
-
 definePageMeta({
-    layout:"learner"
-})
+  layout: "learner",
+});
 
- 
- const { isSignedIn, user, isLoaded } = useUser();
- 
+const { isSignedIn, user, isLoaded } = useUser();
 </script>
 <template>
-   <div>
-  <!-- Single Course Card (Top) -->
-   welcome page
-  
-  
-</div>
-
-
-  </template>
+  <div>
+    <!-- Single Course Card (Top) -->
+    welcome page
+  </div>
+</template>
