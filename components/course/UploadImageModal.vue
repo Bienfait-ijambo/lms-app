@@ -1,34 +1,34 @@
 <script setup>
 
-// async function submitInput() {
- 
-//   const result = await v$.value.$validate();
-//   if (!result) return;
-//   await courseStore.createOrUpdate();
-//   v$.value.$reset();
-// }
+const courseStore = useCourseStore();
+const {saveLoading,showImageModal,uploadImageLoading } =
+  storeToRefs(courseStore);
+
+
 </script>
 <template>
-  <BaseModal :show="showModal">
+  <BaseModal :show="showImageModal">
     <template #title>
-      <h1 class="text-xl mb-4">Uploa</h1>
+      <h1 class="text-xl mb-4">Upload course Thumbnail</h1>
     </template>
     <template #body>
-      
+           <img style="height: 150px" alt="image" id="outputImage" />
+            <label for="">Select image</label>
+            <input @change="courseStore.selectImage" type="file" id="imageInput"  />
       
       
     </template>
     <template #footer>
       <BaseBtn
-        @click="courseStore.toggleModal"
+        @click="courseStore.toggleImageModal"
         :class="'secondary'"
         label="Close"
       />
       <BaseBtn
         :class="'primary'"
-        @click="submitInput"
-        :label="edit ? 'Update' : 'Create'"
-        :loading="saveLoading"
+        @click="courseStore.uploadImage"
+        :label="'Upload Image'"
+        :loading="uploadImageLoading"
       />
     </template>
   </BaseModal>

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   
 
  components: [
@@ -21,8 +21,10 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig:{
+    public:{
+      FALL_BACK_IMG_URL:process.env.FALL_BACK_IMG_URL
+    },
       NUXT_CLERK_SECRET_KEY:process.env.NUXT_CLERK_SECRET_KEY,
-      MUX_API_KEY:process.env.MUX_API_KEY
   },
   
    tailwindcss: {

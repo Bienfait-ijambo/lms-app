@@ -4,17 +4,16 @@ definePageMeta({ layout: "admin" });
 const route = useRoute();
 
 const courseStore = useCourseStore();
-const { singleCourseData, edit, showModal, courseInput, saveLoading, } =
+const { singleCourseData, edit, showModal, courseInput, saveLoading } =
   storeToRefs(courseStore);
 
 const categoryStore = useCategoryStore();
 await categoryStore.fetchCategories();
 
-  courseStore.fetchSingleCourse(route?.params?.slug).then((data)=>{
-  courseInput.value.description = data?.course?.description
-  courseInput.value.id = data?.course?.id
-
-})
+courseStore.fetchSingleCourse(route?.params?.slug).then((data) => {
+  courseInput.value.description = data?.course?.description;
+  courseInput.value.id = data?.course?.id;
+});
 
 function showEditModal(id) {
   if (typeof id !== "undefined") {
@@ -24,26 +23,24 @@ function showEditModal(id) {
     courseStore.appendUserIdPropValue();
   }
 }
-
-
+const config=useRuntimeConfig()
+const fallbackImage=config.public?.FALL_BACK_IMG_URL
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto px-6 py-10">
     <!-- Single Course Card (Top) -->
-       <ClientOnly>
+    <ClientOnly>
       <CourseModal />
       <UploadImageModal />
-
     </ClientOnly>
     <div class="grid grid-cols-12 gap-8 mb-10">
       <div
         class="col-span-12 bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-center gap-6"
       >
-     
         <!-- Thumbnail -->
         <img
-          src="/miro-clone.jpg"
+          :src="singleCourseData?.course?.imageUrl || fallbackImage"
           alt="Course Thumbnail"
           class="w-full md:w-64 h-40 object-cover rounded-lg"
         />
@@ -55,25 +52,26 @@ function showEditModal(id) {
           </h1>
           <p class="text-gray-600 mb-4">
             <span class="font-medium">user-name</span>
+            
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
-             <span>$ {{ singleCourseData?.course?.price }}</span>
+            <span>$ {{ singleCourseData?.course?.price }}</span>
             <span>💻 12 Chapiters</span>
             <span>⏱ 4h 30m</span>
           </div>
 
           <div class="flex items-center gap-2 text-sm text-gray-500 mt-2">
             <button
-            title="Edit course"
-            @click="showEditModal( singleCourseData?.course?.id)"
+              title="Edit course"
+              @click="showEditModal(singleCourseData?.course?.id)"
               class="hover:bg-slate-200 text-gray-900 font-bold px-2 py-2 cursor-pointer rounded flex items-center"
             >
               <EditIcon />
             </button>
 
             <button
-             title="Upload course image"
-            @click="courseStore.toggleImageModal"
+              title="Upload course image"
+              @click="courseStore.toggleImageModal(singleCourseData?.course?.id)"
               class="hover:bg-slate-200 text-gray-900 font-bold py-2 px-2 cursor-pointer rounded flex items-center gap-2"
             >
               <CameraIcon />
@@ -90,7 +88,6 @@ function showEditModal(id) {
         <div class="bg-white p-6 rounded-xl shadow-sm">
           <h2 class="text-xl font-semibold text-gray-800 mb-4">Description</h2>
           <div class="mb-2">
-          
             <ClientOnly>
               <rich-editor
                 :value="courseInput.description"
@@ -115,7 +112,20 @@ function showEditModal(id) {
         <div
           class="bg-white p-6 rounded-xl shadow-sm h-full overflow-y-auto max-h-[500px]"
         >
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Chapitres</h2>
+
+        <div class="flex justify-end mb-3" >
+           <!-- <h2 class="text-sl font-semibold text-gray-800 mb-4">Chapiters</h2> -->
+          <button
+                class=" bg-sky-500 text-white flex p-1 px-2 rounded-sm hover:shadow-sm 1  text-xs cursor-pointer font-semibold"
+                ><AddIcon ></AddIcon> <span class="pt-1 px-2" >Add Chapter</span> 
+                
+                </button
+              >
+        </div >
+
+
+        <!-- <h2 class="text-xl font-semibold text-gray-800 mb-4">Chapiters</h2> -->
+          
           <ul class="space-y-4">
             <li class="flex justify-between items-center">
               <span class="text-gray-700 text-sm"

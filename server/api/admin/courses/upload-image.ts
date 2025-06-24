@@ -76,6 +76,10 @@ async function uploadCourseImage(event: any) {
 
 export default defineEventHandler(async (event) => {
 
+try{
+    
+
+
     const { imageUrl, courseId } = await uploadCourseImage(event)
 
     await prisma.course.update({
@@ -89,6 +93,17 @@ export default defineEventHandler(async (event) => {
 
 
     return { message: ' image uploaded' };
+
+
+
+}catch(error){
+    throw createError({
+        message:"server Error",
+        data:(error as Error)?.mesage,
+        statusCode:500
+    })
+}
+
 
 })
 
