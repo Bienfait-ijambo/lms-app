@@ -1,30 +1,30 @@
 
 
-export function useFetchCategories(){
+export function useFetchCategories() {
 
-      const fetchLoading = ref(false)
+  const fetchLoading = ref(false)
 
   const serverData = ref({})
 
-      async function fetchCategories() {
-        try {
-          fetchLoading.value = true
-          const {data} = await useFetch('/api/admin/categories/get')
-          serverData.value = data.value as any
-    
-          fetchLoading.value = false
-    
-        } catch (error) {
-          fetchLoading.value = false
-        }
-    
-    
-      }
-    
+  async function fetchCategories() {
+    try {
+      fetchLoading.value = true
+      const { data } = await useFetch('/api/admin/categories/get')
+      serverData.value = data.value as any
 
-      return {
-        fetchCategories,
-        fetchLoading,
-        serverData
-      }
+      fetchLoading.value = false
+
+    } catch (error) {
+      fetchLoading.value = false
+    }
+
+
+  }
+
+
+  return {
+    fetchCategories,
+    fetchLoading,
+    serverData
+  }
 }

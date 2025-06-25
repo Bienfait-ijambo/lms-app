@@ -25,6 +25,8 @@ export default defineNuxtConfig({
       FALL_BACK_IMG_URL:process.env.FALL_BACK_IMG_URL
     },
       NUXT_CLERK_SECRET_KEY:process.env.NUXT_CLERK_SECRET_KEY,
+      MUX_TOKEN_ID: process.env.MUX_TOKEN_ID,
+  MUX_TOKEN_SECRET: process.env.MUX_TOKEN_SECRET,
   },
   
    tailwindcss: {

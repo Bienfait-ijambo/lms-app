@@ -4,11 +4,13 @@ definePageMeta({ layout: "admin" });
 const route = useRoute();
 
 const courseStore = useCourseStore();
-const { singleCourseData, edit, showModal, courseInput, saveLoading } =
+const { singleCourseData, edit, showModal, courseInput, saveLoading,chapters } =
   storeToRefs(courseStore);
 
 const categoryStore = useCategoryStore();
 await categoryStore.fetchCategories();
+await courseStore.fetchChapters();
+
 
 courseStore.fetchSingleCourse(route?.params?.slug).then((data) => {
   courseInput.value.description = data?.course?.description;
@@ -33,6 +35,7 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
     <ClientOnly>
       <CourseModal />
       <UploadImageModal />
+      <ChapterModal/>
     </ClientOnly>
     <div class="grid grid-cols-12 gap-8 mb-10">
       <div
@@ -114,49 +117,19 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
         >
 
         <div class="flex justify-end mb-3" >
-           <!-- <h2 class="text-sl font-semibold text-gray-800 mb-4">Chapiters</h2> -->
-          <button
+         <button
+         @click="courseStore.toggleChapterModal(singleCourseData?.course?.id)"
                 class=" bg-sky-500 text-white flex p-1 px-2 rounded-sm hover:shadow-sm 1  text-xs cursor-pointer font-semibold"
                 ><AddIcon ></AddIcon> <span class="pt-1 px-2" >Add Chapter</span> 
                 
                 </button
               >
+          
         </div >
 
+        <CourseChapters :chapters="chapters"/>
 
-        <!-- <h2 class="text-xl font-semibold text-gray-800 mb-4">Chapiters</h2> -->
-          
-          <ul class="space-y-4">
-            <li class="flex justify-between items-center">
-              <span class="text-gray-700 text-sm"
-                >1. Introduction au cours</span
-              >
-              <span
-                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
-                >Add video</span
-              >
-            </li>
-            <li class="flex justify-between items-center">
-              <span class="text-gray-700 text-sm"
-                >2. Introduction au cours</span
-              >
-              <span
-                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
-                >Add video</span
-              >
-            </li>
-            <li class="flex justify-between items-center">
-              <span class="text-gray-700 text-sm"
-                >3. Introduction au cours</span
-              >
-              <span
-                class="bg-slate-100 rounded-sm hover:shadow-sm px-2 py-2 text-gray-900 text-xs cursor-pointer font-semibold"
-                >Add video</span
-              >
-            </li>
 
-            <!-- Repeat for more chapters -->
-          </ul>
         </div>
       </div>
     </div>

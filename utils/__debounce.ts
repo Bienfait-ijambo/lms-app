@@ -9,3 +9,5 @@ export function __debounce(cb:(...args:any[])=>void,delay:number){
         timer=setTimeout(()=>cb(args),delay)
     }
 }
+
+

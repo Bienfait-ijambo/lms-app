@@ -27,8 +27,7 @@ async function submitInput() {
     </template>
     <template #body>
       <FormError :errors="v$.name.$errors">
-      
-
+  
          <BaseInput v-model="categoryInput.name" :placeholder="'Enter category'" />
      
       </FormError>
