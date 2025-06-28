@@ -62,7 +62,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
             {{ singleCourseData?.course?.title }}
           </h1>
           <p class="text-gray-600 mb-4">
-            <span class="font-medium">user-name</span>
+            <span class="font-medium">Owner : {{singleCourseData?.user?.username}}</span>
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
             <span>$ {{ singleCourseData?.course?.price }}</span>
@@ -94,9 +94,9 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
     </div>
 
     <!-- Description + Chapters Grid -->
-    <div class="grid grid-cols-12 gap-10">
+    <div class="grid grid-cols-12 gap-8">
       <!-- Course Description -->
-      <div class="col-span-12 lg:col-span-8">
+      <div class="col-span-12 lg:col-span-7">
         <div class="bg-white p-6 rounded-xl shadow-sm">
           <h2 class="text-xl font-semibold text-gray-800 mb-4">Description</h2>
           <div class="mb-2">
@@ -120,7 +120,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
       </div>
 
       <!-- Course Chapters -->
-      <div class="col-span-12 lg:col-span-4">
+      <div class="col-span-12 lg:col-span-5">
         <div
           class="bg-white p-6 rounded-xl shadow-sm h-full overflow-y-auto max-h-[500px]"
         >

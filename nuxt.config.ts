@@ -2,9 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: false },
-  
 
- components: [
+
+  components: [
     {
       path: '~/components',
       pathPrefix: false,
@@ -20,20 +20,24 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**'],
   },
 
-  runtimeConfig:{
-    public:{
-      FALL_BACK_IMG_URL:process.env.FALL_BACK_IMG_URL
+  runtimeConfig: {
+    public: {
+      FALL_BACK_IMG_URL: process.env.FALL_BACK_IMG_URL,
+      CHAPTER_WITH_VIDEO_IMG: process.env.CHAPTER_WITH_VIDEO_IMG,
+      CHAPTER_WITHOUT_VIDEO_IMG: process.env.CHAPTER_WITHOUT_VIDEO_IMG
+
+
     },
-      NUXT_CLERK_SECRET_KEY:process.env.NUXT_CLERK_SECRET_KEY,
-      MUX_TOKEN_ID: process.env.MUX_TOKEN_ID,
-  MUX_TOKEN_SECRET: process.env.MUX_TOKEN_SECRET,
+    NUXT_CLERK_SECRET_KEY: process.env.NUXT_CLERK_SECRET_KEY,
+    MUX_TOKEN_ID: process.env.MUX_TOKEN_ID,
+    MUX_TOKEN_SECRET: process.env.MUX_TOKEN_SECRET,
   },
-  
-   tailwindcss: {
+
+  tailwindcss: {
     exposeConfig: true,
-     viewer: true,
+    viewer: true,
     // and more...
   }
-  
-   
+
+
 })

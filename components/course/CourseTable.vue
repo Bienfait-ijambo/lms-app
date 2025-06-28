@@ -1,45 +1,39 @@
-<script setup >
-
+<script setup>
 const props = defineProps(["courses"]);
 
 const emit = defineEmits(["editCourse"]);
 
 const courseStore = useCourseStore();
-const { serverData, fetchLoading,search } = storeToRefs(courseStore);
+const { serverData, fetchLoading, search } = storeToRefs(courseStore);
 
 async function refreshTable() {
   await courseStore.fetchCourses();
 }
 
-
-const searchCourse=__debounce(async function(event){
-  const val=event[0].target.value
-  search.value=val
-   await courseStore.fetchCourses();
-
-},1000)
-
-
-
-
+const searchCourse = __debounce(async function (event) {
+  const val = event[0].target.value;
+  search.value = val;
+  await courseStore.fetchCourses();
+}, 1000);
 </script>
 <template>
   <div class="flex justify-between mb-4 mt-4">
-   
+    <div class="flex">
+      <button
+        @click="refreshTable"
+        title="Refresh table"
+        class="hover:bg-slate-200 text-gray-900 font-bold py-1 px-2 cursor-pointer rounded flex items-center gap-2"
+      >
+        <LoadingIcon v-if="fetchLoading" />
 
-    <div  class="flex">
+        <RefreshIcon v-else />
+      </button>
 
-       <button
-      @click="refreshTable"
-      title="Refresh table"
-      class="hover:bg-slate-200 text-gray-900 font-bold py-1 px-2 cursor-pointer rounded flex items-center gap-2"
-    >
-      <LoadingIcon v-if="fetchLoading" />
-
-      <RefreshIcon v-else />
-       </button>
-    
-      <BaseInput :placeholder="'Search...'" @keydown="searchCourse" v-model="search" />
+      <BaseInput
+        :placeholder="'Search...'"
+        @keydown="searchCourse"
+        v-model="search"
+      />
     </div>
 
     <BaseBtn
@@ -86,27 +80,6 @@ const searchCourse=__debounce(async function(event){
   </table>
 
   <div>
-    <button
-      class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-      :disabled="serverData?.metadata?.page === 1"
-      @click="courseStore.fetchCourses(serverData?.metadata?.page - 1)"
-    >
-      Prev
-    </button>
-
-    <span
-      >Page {{ serverData?.metadata?.page }} of
-      {{ serverData?.metadata?.totalPages }}</span
-    >
-
-    <button
-      class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-      :disabled="
-        serverData?.metadata?.page === serverData?.metadata?.totalPages
-      "
-      @click="courseStore.fetchCourses(serverData?.metadata?.page + 1)"
-    >
-      Next
-    </button>
+   
   </div>
 </template>

@@ -5,12 +5,12 @@ export function useFetchCourses(){
 
 
     
-    const limit = ref(10)
+    const limit = ref(1)
     const page = ref(1)
     const search = ref('')
     const fetchLoading = ref(false)
     const serverData = ref({})
-
+    
     const singleCourseData=ref({})
 
     

@@ -3,7 +3,7 @@ definePageMeta({
   layout: "admin",
 });
 
-const categories = ref([{ id: 1, name: "JavaScript" }]);
+
 const categoryStore = useCategoryStore();
 const { categoryInput,edit,serverData,showModal } = storeToRefs(categoryStore);
 

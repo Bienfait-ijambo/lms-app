@@ -35,5 +35,6 @@ function editCourse(course){
     </div>
 
     <CourseTable @editCourse="editCourse" :courses="serverData?.courses" />
+    
   </div>
 </template>
