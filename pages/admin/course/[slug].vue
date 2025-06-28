@@ -4,13 +4,18 @@ definePageMeta({ layout: "admin" });
 const route = useRoute();
 
 const courseStore = useCourseStore();
-const { singleCourseData, edit, showModal, courseInput, saveLoading,chapters } =
-  storeToRefs(courseStore);
+const {
+  singleCourseData,
+  edit,
+  showModal,
+  courseInput,
+  saveLoading,
+  chapters,
+} = storeToRefs(courseStore);
 
 const categoryStore = useCategoryStore();
 await categoryStore.fetchCategories();
 await courseStore.fetchChapters();
-
 
 courseStore.fetchSingleCourse(route?.params?.slug).then((data) => {
   courseInput.value.description = data?.course?.description;
@@ -25,8 +30,8 @@ function showEditModal(id) {
     courseStore.appendUserIdPropValue();
   }
 }
-const config=useRuntimeConfig()
-const fallbackImage=config.public?.FALL_BACK_IMG_URL
+const config = useRuntimeConfig();
+const fallbackImage = config.public?.FALL_BACK_IMG_URL;
 </script>
 
 <template>
@@ -35,7 +40,10 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
     <ClientOnly>
       <CourseModal />
       <UploadImageModal />
-      <ChapterModal/>
+      <ChapterModal />
+      <UploadVideoModal />
+
+      
     </ClientOnly>
     <div class="grid grid-cols-12 gap-8 mb-10">
       <div
@@ -55,7 +63,6 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
           </h1>
           <p class="text-gray-600 mb-4">
             <span class="font-medium">user-name</span>
-            
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
             <span>$ {{ singleCourseData?.course?.price }}</span>
@@ -74,7 +81,9 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
 
             <button
               title="Upload course image"
-              @click="courseStore.toggleImageModal(singleCourseData?.course?.id)"
+              @click="
+                courseStore.toggleImageModal(singleCourseData?.course?.id)
+              "
               class="hover:bg-slate-200 text-gray-900 font-bold py-2 px-2 cursor-pointer rounded flex items-center gap-2"
             >
               <CameraIcon />
@@ -85,7 +94,7 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
     </div>
 
     <!-- Description + Chapters Grid -->
-    <div class="grid grid-cols-12 gap-8">
+    <div class="grid grid-cols-12 gap-10">
       <!-- Course Description -->
       <div class="col-span-12 lg:col-span-8">
         <div class="bg-white p-6 rounded-xl shadow-sm">
@@ -115,21 +124,23 @@ const fallbackImage=config.public?.FALL_BACK_IMG_URL
         <div
           class="bg-white p-6 rounded-xl shadow-sm h-full overflow-y-auto max-h-[500px]"
         >
+          <div class="flex justify-end mb-3">
+            <button
+              @click="
+                courseStore.toggleChapterModal(singleCourseData?.course?.id)
+              "
+              class="bg-sky-500 text-white flex p-1 px-2 rounded-sm hover:shadow-sm 1 text-xs cursor-pointer font-semibold"
+            >
+              <AddIcon></AddIcon> <span class="pt-1 px-2">Add Chapter</span>
+            </button>
+          </div>
 
-        <div class="flex justify-end mb-3" >
-         <button
-         @click="courseStore.toggleChapterModal(singleCourseData?.course?.id)"
-                class=" bg-sky-500 text-white flex p-1 px-2 rounded-sm hover:shadow-sm 1  text-xs cursor-pointer font-semibold"
-                ><AddIcon ></AddIcon> <span class="pt-1 px-2" >Add Chapter</span> 
-                
-                </button
-              >
+
           
-        </div >
 
-        <CourseChapters :chapters="chapters"/>
-
-
+          <CourseChapters 
+          :chapters="chapters" 
+          @uploadVideo="courseStore.toggleVideoModal" />
         </div>
       </div>
     </div>

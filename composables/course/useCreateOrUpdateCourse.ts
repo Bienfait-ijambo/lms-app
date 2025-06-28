@@ -80,8 +80,8 @@ export function useCreateOrUpdateCourse(){
                 saveLoading.value = false
     
             } catch (error) {
-            //  const serverError=error?.data?.data?.data
-            //  console.log(serverError)
+             const serverError=error?.data?.data?.data
+            
                 saveLoading.value = false
                 showValidationErrors((error as Error))
     

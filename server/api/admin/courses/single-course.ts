@@ -1,3 +1,4 @@
+import { createClerkClient } from "@clerk/backend";
 import prisma from "~/lib/prisma";
 
 export default defineEventHandler(async (event) => {
@@ -5,7 +6,8 @@ export default defineEventHandler(async (event) => {
 
         const query=getQuery(event)
         const slug=query?.slug as string
-     
+
+
         const course = await prisma.course.findFirst({
             where:{
                 slug:slug
@@ -14,7 +16,9 @@ export default defineEventHandler(async (event) => {
                 category:true
             }
         });
-
+        
+        
+               
         if(!course){
             throw createError({
                 statusMessage:'course not found',
@@ -22,8 +26,8 @@ export default defineEventHandler(async (event) => {
             })
         }
 
-
-        return {  statusCode: 200, course }
+       
+        return {  statusCode: 200, course ,user}
 
     } catch (error) {
         throw createError({

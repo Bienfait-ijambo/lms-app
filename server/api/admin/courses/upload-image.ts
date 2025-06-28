@@ -49,8 +49,6 @@ const upload = multer({
 
 async function uploadCourseImage(event: any) {
 
-
-
     return new Promise<{ imageUrl: string, courseId: string }>((resolve, reject) => {
         upload(event.req, event.res, async (err: any) => {
 

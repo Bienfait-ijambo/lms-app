@@ -1,4 +1,3 @@
-import { showServerError, successMsg } from "~/utils/toast-notification";
 import { useFetchCategories } from "./useFetchCategories";
 
 
@@ -10,7 +9,7 @@ export function useCreateOrUpdateCategory(){
   const edit = ref(false)
   const saveLoading = ref(false)
 
-  const {fetchCategories}=useFetchCategories()
+  // const {fetchCategories}=useFetchCategories()
 
 
   const showModal = ref(false)
@@ -32,14 +31,14 @@ export function useCreateOrUpdateCategory(){
         body: JSON.stringify(categoryInput.value)
       })
       categoryInput.value = {} as any
-      await fetchCategories()
+     
       successMsg(result?.message)
       edit.value = false
       saveLoading.value = false
 
     } catch (error) {
       saveLoading.value = false
-     showServerError((error as Error)?.message)
+       showValidationErrors((error as Error))
 
     }
   }

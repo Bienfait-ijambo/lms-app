@@ -38,9 +38,6 @@ async function submitInput() {
         />
       </FormError>
 
-
- 
-      
     </template>
     <template #footer>
       <BaseBtn

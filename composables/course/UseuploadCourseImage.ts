@@ -1,7 +1,7 @@
 
 
 
-export function UseUploadCourseImage() {
+export function useUploadCourseImage() {
 
 
     const uploadImageInput = ref({
@@ -42,13 +42,13 @@ export function UseUploadCourseImage() {
 
             };
             uploadImageLoading.value = true
-            const res:{message:string} = await $fetch('/api/admin/courses/upload-image', payload as any);
-                  (document.querySelector("#outputImage") as HTMLImageElement).src = '';
-            (document.querySelector('#imageInput') as HTMLInputElement).value=''
-          
+            const res: { message: string } = await $fetch('/api/admin/courses/upload-image', payload as any);
+            (document.querySelector("#outputImage") as HTMLImageElement).src = '';
+            (document.querySelector('#imageInput') as HTMLInputElement).value = ''
+
             successMsg(res?.message)
 
-         
+
             uploadImageLoading.value = false
 
         } catch (error) {

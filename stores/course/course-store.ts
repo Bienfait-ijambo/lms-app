@@ -4,21 +4,24 @@ import { useCreateOrUpdatechapter } from '~/composables/course/useCreateOrUpdate
 import { useCreateOrUpdateCourse } from '~/composables/course/useCreateOrUpdateCourse';
 import { useFetchChapters } from '~/composables/course/useFetchChapters';
 import { useFetchCourses } from '~/composables/course/useFetchCourses';
-import { UseUploadCourseImage } from '~/composables/course/useUploadCourseImage';
+import { useUploadChapterVideo } from '~/composables/course/useUploadChapterVideo';
+import { useUploadCourseImage } from '~/composables/course/useUploadCourseImage';
 
 export const useCourseStore = defineStore('coourse-store', () => {
-    
-      
+
+
     // const deleteCourseProps=useDeleteCourse()
-    const fetchCourseProps=useFetchCourses()
-    const createOrUpdateCourseProps=useCreateOrUpdateCourse()
-    const uploadImageProps=UseUploadCourseImage()
-    const chapterProps=useCreateOrUpdatechapter()
-    const fetchChaptersProps=useFetchChapters()
+    const fetchCourseProps = useFetchCourses()
+    const createOrUpdateCourseProps = useCreateOrUpdateCourse()
+    const uploadImageProps = useUploadCourseImage()
+    const chapterProps = useCreateOrUpdatechapter()
+    const fetchChaptersProps = useFetchChapters()
+
+    const uploadVideoProps = useUploadChapterVideo()
 
 
 
-    return {...fetchChaptersProps, ...chapterProps,...fetchCourseProps,...createOrUpdateCourseProps,...uploadImageProps }
+    return { ...uploadVideoProps, ...fetchChaptersProps, ...chapterProps, ...fetchCourseProps, ...createOrUpdateCourseProps, ...uploadImageProps }
 })
 
 

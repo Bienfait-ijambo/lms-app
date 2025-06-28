@@ -1,8 +1,12 @@
 import Mux from '@mux/mux-node';
+import prisma from '~/lib/prisma';
 
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
+try {
 
+    
+    const {chapterId}=await readBody(event)
     const config = useRuntimeConfig()
 
 
@@ -12,8 +16,6 @@ export default defineEventHandler(async () => {
 
     })
 
-
-
     const upload = await client.video.uploads.create({
         new_asset_settings: {
             playback_policy: ['public'],
@@ -21,8 +23,30 @@ export default defineEventHandler(async () => {
         cors_origin: '*', // in production: your domain
     })
 
-    return {
-        uploadUrl: upload.url,
-        uploadId: upload.id,
+    const chapterVideo=await prisma.chapter.update({
+        where:{
+            id:chapterId,
+        },
+        data:{
+            videoUrl:upload.id
+        }
+    })
+
+    return{
+     
+        uploadUrl:upload?.url,
+        uploadId:upload?.id,
+        message:"Chapter video uploaded successfully !"
     }
+
+
+    
+} catch (error) {
+    throw createError({
+        message:(error as Error)?.message,
+        data:error
+    })
+}
+    
 })
+
