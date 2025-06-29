@@ -5,13 +5,19 @@ export function useFetchCourses(){
 
 
     
-    const limit = ref(1)
+    const limit = ref(10)
     const page = ref(1)
     const search = ref('')
     const fetchLoading = ref(false)
     const serverData = ref({})
     
     const singleCourseData=ref({})
+
+    async function paginateCourses(currentPage:number){
+        page.value=currentPage
+        await fetchCourses()
+    }
+
 
     
     async function fetchCourses() {
@@ -64,6 +70,7 @@ export function useFetchCourses(){
     }
 
     return{
+        paginateCourses,
         fetchCourses,fetchLoading,serverData,search,fetchSingleCourse,singleCourseData
     }
 }

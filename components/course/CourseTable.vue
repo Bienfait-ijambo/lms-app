@@ -6,15 +6,17 @@ const emit = defineEmits(["editCourse"]);
 const courseStore = useCourseStore();
 const { serverData, fetchLoading, search } = storeToRefs(courseStore);
 
-async function refreshTable() {
-  await courseStore.fetchCourses();
-}
 
 const searchCourse = __debounce(async function (event) {
   const val = event[0].target.value;
   search.value = val;
   await courseStore.fetchCourses();
 }, 1000);
+
+async function refreshTable() {
+  await courseStore.fetchCourses();
+}
+
 </script>
 <template>
   <div class="flex justify-between mb-4 mt-4">
@@ -80,6 +82,6 @@ const searchCourse = __debounce(async function (event) {
   </table>
 
   <div>
-   
+   <slot name="pagination"></slot>
   </div>
 </template>

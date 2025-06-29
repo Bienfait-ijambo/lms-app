@@ -9,6 +9,15 @@ export default defineEventHandler(async (event) => {
         const limit = parseInt(query?.limit as string) || 10
         const search = query?.search as string
 
+        const categoryFilter=[]
+
+        //[1,2]
+        // 1,2=["1","2"] =[0,1,2]
+        // const categories=Array.isArray(query?.categories) ? query?.categories 
+        // : ((query?.categories || '' ) as string).split(',')
+
+
+  
         const [courses, total] = await Promise.all([
             prisma.course.findMany({
                 where: search ? {
