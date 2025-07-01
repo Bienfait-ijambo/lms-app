@@ -1,5 +1,23 @@
 <script setup>
 const props = defineProps(["categories"]);
+
+const courseStore=useCourseStore()
+const {categoryFilter}=storeToRefs(courseStore)
+
+async function selectCategory(categoryId){
+
+  const exist=categoryFilter.value.filter(category=>category===categoryId)
+ if(exist.length===0){
+  categoryFilter.value.push(categoryId)
+  await courseStore.fetchCourses(categoryFilter.value);
+ }else{
+   const categories=categoryFilter.value.filter(category=>category!==categoryId)
+   categoryFilter.value=[]
+  categoryFilter.value=categories
+  await courseStore.fetchCourses(categoryFilter.value);
+ }
+
+}
 </script>
 <template>
   <aside
@@ -11,10 +29,14 @@ const props = defineProps(["categories"]);
     </h2>
 
     <!-- Category Filters -->
+     {{categoryFilter}}
+   
     <div class="space-y-4 ">
       <label
         v-for="(category, index) in categories"
         :key="category.id"
+        @click="selectCategory(category?.id)"
+      
         class="flex items-center cursor-pointer group"
       >
         <input
@@ -23,6 +45,7 @@ const props = defineProps(["categories"]);
         />
 
         <span
+         @click="selectCategory(category?.id)"
           class="text-gray-700 px-2 text-sm group-hover:text-indigo-600 transition"
         >
           {{ category?.name }}

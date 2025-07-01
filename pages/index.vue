@@ -25,7 +25,9 @@ await courseStore.fetchCourses();
 
     <div class="flex">
       <!-- Sidebar: Course Categories -->
-      <CategoryFilter :categories="serverData?.categories" />
+      <CategoryFilter 
+      :categories="serverData?.categories" 
+      />
 
       <!-- Main Section: Courses -->
       <main class="flex-1 p-6">

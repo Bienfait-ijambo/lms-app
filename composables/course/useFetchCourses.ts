@@ -12,6 +12,7 @@ export function useFetchCourses(){
     const serverData = ref({})
     
     const singleCourseData=ref({})
+    const categoryFilter=ref([])
 
     async function paginateCourses(currentPage:number){
         page.value=currentPage
@@ -20,13 +21,25 @@ export function useFetchCourses(){
 
 
     
-    async function fetchCourses() {
+    async function fetchCourses(categories?:string[]) {
         try {
+            const filters=[] as Record<string,any >
+
+            if(typeof categories!=='undefined'){
+                    filters['categories']=categories
+                }
+
+
+                if(search.value!==''){
+                    filters['search']=search.value
+                }
+
             fetchLoading.value = true
             const { data } = await useFetch('/api/admin/courses/get', {
 
+                
                 query: {
-                    search: search.value,
+                    ...filters,
                     page: page.value,
                     limit: limit.value
                 }
@@ -71,6 +84,7 @@ export function useFetchCourses(){
 
     return{
         paginateCourses,
+        categoryFilter,
         fetchCourses,fetchLoading,serverData,search,fetchSingleCourse,singleCourseData
     }
 }

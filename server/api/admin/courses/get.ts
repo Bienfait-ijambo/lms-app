@@ -9,38 +9,51 @@ export default defineEventHandler(async (event) => {
         const limit = parseInt(query?.limit as string) || 10
         const search = query?.search as string
 
-        const categoryFilter=[]
+        const filters = []
+        
+        const categories = Array.isArray(query?.categories)
+            ? query?.categories : ((query?.categories || '') as string)
+            .split(',').map(item=>item.trim()).filter(Boolean)
 
-        //[1,2]
-        // 1,2=["1","2"] =[0,1,2]
-        // const categories=Array.isArray(query?.categories) ? query?.categories 
-        // : ((query?.categories || '' ) as string).split(',')
+        if (categories && categories.length > 0) {
+            filters.push({
+                categoryId: {
+                    in: [...categories]
+                }
+            })
+        }
+        // .trim()
+    
+        if (search && search.trim() !== '') {
+            filters.push({
+                title: {
+                    contains: search,
+                    mode: 'insensitive'
+                }
+            })
+        }
 
+        //    select * from "courses" where title like '%%' or categoryId in(1,2)
 
-  
         const [courses, total] = await Promise.all([
             prisma.course.findMany({
-                where: search ? {
-                    title: {
-                        contains: search,
-                        mode: 'insensitive'
-                    }
-                } : {},
-                include:{
-                    category:true
+
+                where:filters.length>0 ? {
+                    OR: [...filters as any]
+                }:{},
+               
+                include: {
+                    category: true
                 },
                 //1-1=0*10=0
                 skip: (page - 1) * limit,
                 take: limit,
-            
+
             }),
             prisma.course.count({
-                where: search ? {
-                    title: {
-                        contains: search,
-                        mode: 'insensitive'
-                    }
-                } : {},
+                 where:filters.length>0 ? {
+                    OR: [...filters as any]
+                }:{},
 
             })
 
@@ -49,14 +62,14 @@ export default defineEventHandler(async (event) => {
 
 
         // [
-            // {
-            //     id:1,
-            //     title:"",
-            //     category:{
-            //         id:"",
-            //         name
-            //     }
-            // }
+        // {
+        //     id:1,
+        //     title:"",
+        //     category:{
+        //         id:"",
+        //         name
+        //     }
+        // }
         // ]
 
 
