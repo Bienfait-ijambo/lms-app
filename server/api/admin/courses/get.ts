@@ -22,8 +22,7 @@ export default defineEventHandler(async (event) => {
                 }
             })
         }
-        // .trim()
-    
+       
         if (search && search.trim() !== '') {
             filters.push({
                 title: {

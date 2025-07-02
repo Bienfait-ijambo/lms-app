@@ -29,7 +29,7 @@ async function selectCategory(categoryId){
     </h2>
 
     <!-- Category Filters -->
-     {{categoryFilter}}
+  
    
     <div class="space-y-4 ">
       <label

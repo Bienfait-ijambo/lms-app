@@ -48,4 +48,8 @@ npx prisma migrate reset
 TO DO LIST
 _______________
 
-- add option chaining in formError component
+- switch between chapters
+- add course status(free or paid)
+- learner account to view a paid course
+- payment
+-
