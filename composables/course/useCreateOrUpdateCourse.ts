@@ -8,9 +8,10 @@ export function useCreateOrUpdateCourse(){
     
 
     const saveLoading = ref(false)
+    const courseStatus=ref(['free','paid'])
     const edit=ref(false)
     const {fetchCourses}=useFetchCourses()
-      const courseInput = ref({ id: null, title: "",price:"",description:"", categoryId: null, userId: "" });
+      const courseInput = ref({ id: null, title: "",price:"",description:"",status:'free', categoryId: null, userId: "" });
     
     
 
@@ -94,6 +95,7 @@ export function useCreateOrUpdateCourse(){
             saveLoading,
             edit,
             toggleModal,
+            courseStatus,
             showModal,
             appendUserIdPropValue,
             updateCourseDescription

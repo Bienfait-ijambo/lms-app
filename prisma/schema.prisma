@@ -18,6 +18,15 @@ model Category {
   courses Course[]
 }
 
+
+
+enum CourseStatus {
+  free
+  paid
+}
+
+
+
 model Course {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title      String
@@ -25,10 +34,12 @@ model Course {
   categoryId String   @db.Uuid
   userId     String
   slug       String
+  status      CourseStatus @default(free)
   description String?
   price      Decimal? @db.Decimal(10, 2)
   imageUrl   String?
   category   Category @relation(fields: [categoryId], references: [id])
+
 }
 
 model Chapter {
@@ -37,4 +48,21 @@ model Chapter {
   courseId String  @db.Uuid
   slug     String
   videoUrl String?
+}
+
+
+enum PaymentStatus {
+  succeed
+  failed
+}
+
+
+model payment {
+  id        Int     @id @default(autoincrement())
+  courseId  String  @db.Uuid
+  userId    String  @db.Uuid
+  amount    Decimal @db.Decimal(10, 2)
+  status    PaymentStatus @default(succeed)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

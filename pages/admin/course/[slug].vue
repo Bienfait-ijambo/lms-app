@@ -3,6 +3,7 @@ definePageMeta({ layout: "admin" });
 
 const route = useRoute();
 
+
 const courseStore = useCourseStore();
 const {
   singleCourseData,
@@ -15,17 +16,21 @@ const {
 
 const categoryStore = useCategoryStore();
 await categoryStore.fetchCategories();
-await courseStore.fetchChapters();
 
-courseStore.fetchSingleCourse(route?.params?.slug).then((data) => {
+
+courseStore.fetchSingleCourse(route?.params?.slug).then(async(data) => {
   courseInput.value.description = data?.course?.description;
   courseInput.value.id = data?.course?.id;
+  await courseStore.fetchChapters(data?.course?.id);
 });
 
-function showEditModal(id) {
+function showEditModal(id,title,price) {
   if (typeof id !== "undefined") {
     edit.value = true;
     courseInput.value.id = id;
+    courseInput.value.title = title;
+    courseInput.value.price = price;
+
     showModal.value = true;
     courseStore.appendUserIdPropValue();
   }
@@ -66,14 +71,19 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
             <span>$ {{ singleCourseData?.course?.price }}</span>
-            <span>💻 12 Chapiters</span>
+            <span>💻 {{chapters.length}} Chapiters</span>
+             <span
+                    class="text-white px-2 py-1 bg-green-600 rounded-full text-sm font-semibold border border-green-600"
+                  >
+                     {{ singleCourseData?.course?.status}}</span
+                  >
             <span>⏱ 4h 30m</span>
           </div>
 
           <div class="flex items-center gap-2 text-sm text-gray-500 mt-2">
             <button
               title="Edit course"
-              @click="showEditModal(singleCourseData?.course?.id)"
+              @click="showEditModal(singleCourseData?.course?.id,singleCourseData?.course?.title,singleCourseData?.course?.price)"
               class="hover:bg-slate-200 text-gray-900 font-bold px-2 py-2 cursor-pointer rounded flex items-center"
             >
               <EditIcon />

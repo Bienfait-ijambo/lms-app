@@ -46,16 +46,15 @@ const searchCourse = __debounce(async function (event) {
       <div class="mt-3">
         <h3 class="font-semibold text-lg">{{ course?.title }}</h3>
         <span class="bg-slate-100 px-2 py-1 rounded-full text-sm">{{ course?.category?.name }}</span>
-        <!-- <p class="text-indigo-600 font-bold mt-2">{{ course?.price }} $</p> -->
         <div class="flex justify-between">
           <div>
-            <p class="text-indigo-600 font-bold mt-2">{{ course?.price }} $</p>
+            <p class="text-blue-400 font-bold mt-2">{{ course?.price }} $</p>
           </div>
 
            <div>
             <NuxtLink
             :to="'/view-course/'+course?.slug"
-              class="text-sm bg-indigo-600 rounded-full px-2 py-1 text-white font-semibold"
+              class="text-sm bg-blue-400 rounded-full px-2 py-1 text-white font-semibold"
             >
               View Course
             </NuxtLink>

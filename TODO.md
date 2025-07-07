@@ -48,8 +48,13 @@ npx prisma migrate reset
 TO DO LIST
 _______________
 
-- switch between chapters
+- adjust thing :courseChapter [title,color]
 - add course status(free or paid)
+
 - learner account to view a paid course
 - payment
--
+- think about ai agent
+
+
+
+

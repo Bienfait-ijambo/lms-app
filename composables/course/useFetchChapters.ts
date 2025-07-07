@@ -8,18 +8,46 @@ export type ChapterType = Array<{
     slug: string;
     videoUrl: string | null;
 }
-> | undefined
+> | undefined  | null
 export function useFetchChapters() {
 
 
     const chapters = ref<ChapterType>()
     const fetchChapterLoading = ref(false)
+    const fetchVideoLoading=ref(false)
+    const chapterVideoData=ref()
 
 
-    async function fetchChapters() {
+    async function fetchChapterVideo(videoUrl:string) {
+        try {
+            fetchVideoLoading.value = true
+            const { data } = await useFetch('/api/admin/chapters/chapter-video',{
+                query:{
+                    videoUrl:videoUrl
+                }
+            })
+            chapterVideoData.value = data.value
+
+            fetchVideoLoading.value = false
+
+
+
+        } catch (error) {
+            fetchVideoLoading.value = false
+        }
+
+
+    }
+
+
+    async function fetchChapters(courseId:string) {
         try {
             fetchChapterLoading.value = true
-            const { data } = await useFetch('/api/admin/chapters/get')
+            const { data } = await useFetch('/api/admin/chapters/get',{
+                query:{
+                    courseId:courseId
+                }
+            })
             chapters.value = data.value?.chapters
 
             fetchChapterLoading.value = false
@@ -35,6 +63,6 @@ export function useFetchChapters() {
 
 
     return {
-fetchChapters,chapters
+fetchChapters,chapters,chapterVideoData,fetchChapterVideo,fetchVideoLoading
     }
 }
