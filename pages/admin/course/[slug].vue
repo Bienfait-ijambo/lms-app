@@ -70,7 +70,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
             <span class="font-medium">Owner : {{singleCourseData?.user?.username}}</span>
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
-            <span>$ {{ singleCourseData?.course?.price }}</span>
+            <span> {{ formatAmount(singleCourseData?.course?.price) }}</span>
             <span>💻 {{chapters.length}} Chapiters</span>
              <span
                     class="text-white px-2 py-1 bg-green-600 rounded-full text-sm font-semibold border border-green-600"

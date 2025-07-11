@@ -41,7 +41,7 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
             <!-- Video Player -->
             
             <div class="col-span-12 lg:col-span-8">
-              <StripeElement></StripeElement>
+              <StripeElement :singleCourseData="singleCourseData"/>
               <div
                 class="aspect-video overflow-hidden shadow"
               v-if="chapterVideoData?.playbackId"
@@ -86,7 +86,7 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
                   <button
                     class="cursor-pointer shadow-md text-white bg-blue-400 px-2 py-1 font-bold rounded-md text-sm"
                   >
-                    Pay to watch {{ singleCourseData?.course?.price }} $
+                    Pay to watch {{ formatAmount(singleCourseData?.course?.price) }} 
                   </button>
                 </div>
               </div>

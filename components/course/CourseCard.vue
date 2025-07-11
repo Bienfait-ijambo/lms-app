@@ -48,7 +48,7 @@ const searchCourse = __debounce(async function (event) {
         <span class="bg-slate-100 px-2 py-1 rounded-full text-sm">{{ course?.category?.name }}</span>
         <div class="flex justify-between">
           <div>
-            <p class="text-blue-400 font-bold mt-2">{{ course?.price }} $</p>
+            <p class="text-blue-400 font-bold mt-2">{{ formatAmount(course?.price) }} </p>
           </div>
 
            <div>

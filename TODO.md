@@ -48,13 +48,21 @@ npx prisma migrate reset
 TO DO LIST
 _______________
 
-- adjust thing :courseChapter [title,color]
-- add course status(free or paid)
-
-- learner account to view a paid course
-- payment
+- payment (think and analyse what missed)
 - think about ai agent
 
+- edit and reach 6 stop [stop]
+
+
+- contact Anthony
 
 
 
+//store payment (refer ecommerce)
+//create http req on front
+//track userId
+//check if user is authenticated [if not tell him to logged in]
+//check if user has already paid a course to view content()[create a layout]
+//add lock for locked chapters
+//format numbers
+// add a splatsh 

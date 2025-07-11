@@ -8,12 +8,6 @@ export default defineEventHandler(async (event) => {
         const slug = query?.slug as string
 
 
-        const config = useRuntimeConfig()
-        const secretKey = config.NUXT_CLERK_SECRET_KEY
-        const clerkClient = createClerkClient({ secretKey: secretKey })
-
-
-
         const course = await prisma.course.findFirst({
             where: {
                 slug: slug
@@ -22,6 +16,8 @@ export default defineEventHandler(async (event) => {
                 category: true
             }
         });
+
+        
 
 
 
@@ -33,10 +29,8 @@ export default defineEventHandler(async (event) => {
         }
 
 
-        const user = await clerkClient.users.getUser(course?.userId)
 
-
-        return { statusCode: 200, course, user }
+        return { statusCode: 200, course }
 
     } catch (error) {
         throw createError({
