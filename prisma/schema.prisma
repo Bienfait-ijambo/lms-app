@@ -39,7 +39,7 @@ model Course {
   price      Decimal? @db.Decimal(10, 2)
   imageUrl   String?
   category   Category @relation(fields: [categoryId], references: [id])
-
+ payments payment[]
 }
 
 model Chapter {
@@ -69,6 +69,9 @@ model payment {
   status    PaymentStatus @default(succeed)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+   course   Course @relation(fields: [courseId], references: [id])
+
+
 }
 
 

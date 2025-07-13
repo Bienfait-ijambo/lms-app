@@ -43,6 +43,7 @@ async function createPayment() {
       showServerError("Payment failed:", confirmError.message);
     } else {
       successMsg(message);
+      setTimeout(()=>window.location.reload(),2000)
     }
   } catch (error) {
     isLoading.value = false;
@@ -84,7 +85,7 @@ onMounted(() => {
     <div v-else class="bg-white p-4 mb-2 rounded-md shadow-md border border-slate-200">
       <p class="mt-1 text-gray-500">
         Sign In to process payment
-        <NuxtLink href="/auth/signin" class="text-bold text-xl text-blue-400"
+        <NuxtLink href="/auth/signin" class="text-semibold cursor-pointer text-sm text-blue-400"
           >Sign in</NuxtLink
         >.
       </p>

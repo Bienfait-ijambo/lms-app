@@ -15,14 +15,13 @@ useHead({
 });
 
 const route = useRoute();
-const config=useRuntimeConfig()
+const config = useRuntimeConfig();
 const courseStore = useCourseStore();
-const { singleCourseData, fetchVideoLoading, chapters, chapterVideoData } =
+const { singleCourseData, fetchVideoLoading, chapters, chapterVideoData,checkCourseStatusData } =
   storeToRefs(courseStore);
 
-await courseStore.fetchChapters();
-
 courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
+  await courseStore.fetchCourseStatus(route?.params?.slug)
   await courseStore.fetchChapters(data?.course?.id);
 });
 </script>
@@ -34,17 +33,20 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
 
     <div class="flex">
       <!-- Main Section: Courses -->
-        
+
       <main class="flex-1 p-6">
         <div class="max-w-7xl mx-auto px-6 py-10">
           <div class="grid grid-cols-12 gap-8">
             <!-- Video Player -->
-            
+
             <div class="col-span-12 lg:col-span-8">
-              <StripeElement :singleCourseData="singleCourseData"/>
+              <StripeElement
+              v-if="checkCourseStatusData?.lockChapters"
+               :singleCourseData="singleCourseData" />
+           
               <div
                 class="aspect-video overflow-hidden shadow"
-              v-if="chapterVideoData?.playbackId"
+                v-if="chapterVideoData?.playbackId"
               >
                 <ClientOnly>
                   <mux-player
@@ -54,23 +56,24 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
                 </ClientOnly>
               </div>
 
-              <div
-                class="aspect-video overflow-hidden shadow"
-             v-else
-              >
+              <div class="aspect-video overflow-hidden shadow" v-else>
                 <div class="flex justify-center">
                   <div class="flex flex-col mt-40">
                     <div align="center" class="mb-2">
-                      <img width="100" :src="config?.public?.CHAPTER_WITHOUT_VIDEO_IMG" alt="">
+                      <img
+                        width="100"
+                        :src="config?.public?.CHAPTER_WITHOUT_VIDEO_IMG"
+                        alt=""
+                      />
                     </div>
-                    <div align="center" >
-                   <span class="font-bold"> No video found for this chapter</span>
-                  </div>
-
+                    <div align="center">
+                      <span class="font-bold">
+                        No video found for this chapter</span
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
-              
 
               <div>
                 <h1 class="text-2xl font-semibold text-gray-900 mb-2 mt-2">
@@ -81,13 +84,9 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
                   <span
                     class="text-white px-3 py-1 bg-green-600 rounded-full text-sm font-semibold border border-green-600"
                   >
-                   {{ singleCourseData?.course?.status}}</span
+                    {{ singleCourseData?.course?.status }}</span
                   >
-                  <button
-                    class="cursor-pointer shadow-md text-white bg-blue-400 px-2 py-1 font-bold rounded-md text-sm"
-                  >
-                    Pay to watch {{ formatAmount(singleCourseData?.course?.price) }} 
-                  </button>
+                 
                 </div>
               </div>
 
@@ -121,6 +120,7 @@ courseStore.fetchSingleCourse(route?.params?.slug).then(async (data) => {
                 </h2>
 
                 <CourseChapters
+                :checkCourseStatusData="checkCourseStatusData"
                   :chapters="chapters"
                   @fetchChapterVideo="courseStore.fetchChapterVideo"
                 />

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { ChapterType } from "~/composables/course/useFetchChapters";
+import type { ChapterType, IChapter } from "~/composables/course/useFetchChapters";
 
 const props = defineProps<{
   chapters: ChapterType;
+  checkCourseStatusData:{lockChapters:boolean}
 }>();
+
 
 const emit = defineEmits<{
   (e: "uploadVideo", chapterId: string): void;
@@ -14,17 +16,29 @@ const config = useRuntimeConfig();
 
 const { isSignedIn, user, isLoaded } = useUser();
 const role = user.value?.publicMetadata?.role as string;
+
+function fetchVideoChapter(chapter:IChapter){
+  const lock=props.checkCourseStatusData?.lockChapters
+  if(lock){
+    showServerError('This chapter is locked, you need to pay')
+  }else{
+    emit('fetchChapterVideo', chapter?.videoUrl)
+  }
+  
+}
 </script>
 <template>
   <ul class="space-y-4">
     <li
       v-for="(chapter, index) in chapters"
       :key="chapter?.id"
-      @click="emit('fetchChapterVideo', chapter?.videoUrl)"
+      @click="fetchVideoChapter(chapter)"
       class="flex justify-between items-center cursor-pointer hover:bg-slate-100"
     >
       <div class="flex items-center gap-2">
+        <LockIcon v-if="checkCourseStatusData?.lockChapters"></LockIcon>
         <img
+        v-else
           width="50"
           class="border border-gray-300 rounded-md"
           :src="
@@ -34,6 +48,8 @@ const role = user.value?.publicMetadata?.role as string;
           "
           alt="image"
         />
+        
+        
         <span class="text-gray-700 text-sm"
           >{{ index }}. {{ chapter?.title }}
         </span>
@@ -46,6 +62,6 @@ const role = user.value?.publicMetadata?.role as string;
       >
     </li>
 
-    <!-- Repeat for more chapters -->
+    
   </ul>
 </template>

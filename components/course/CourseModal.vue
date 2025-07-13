@@ -32,10 +32,12 @@ async function submitInput() {
 </script>
 <template>
   <BaseModal :show="showModal">
+   
     <template #title>
       <h1 class="text-xl mb-4">{{ edit ? "Update" : "Create" }} course</h1>
     </template>
     <template #body>
+     
       <FormError :errors="v$.title.$errors">
         <BaseInput
           class="mb-2"

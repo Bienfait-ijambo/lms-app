@@ -6,7 +6,7 @@ import { ZodError } from "zod";
 export default defineEventHandler(async (event) => {
     try {
 
-        const { id,title,categoryId,price,description } = await readBody(event)
+        const { id,title,categoryId,price,description,status } = await readBody(event)
 
 
         const result = updateCourseSchema.safeParse({ id,title,categoryId,price,description });
@@ -28,8 +28,9 @@ export default defineEventHandler(async (event) => {
                 title: title,
                 categoryId: categoryId,
                 price: price,
+                status:status,
                 // description: description,
-                slug:slug
+                // slug:slug
             },
         });
 

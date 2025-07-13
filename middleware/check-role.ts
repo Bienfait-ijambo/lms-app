@@ -24,9 +24,12 @@ async function checkRole(role:string){
 
     if(typeof role==='undefined'){
         await updateRole()
-        window.location.href="/learner/home"
+        // window.location.href="/learner/home"
+          window.location.href="/"
     }else if(role===USER_ROLE.LEANER){
-        window.location.href="/learner/home"
+        // window.location.href="/learner/home"
+        window.location.href="/"
+
     }else if(role===USER_ROLE.ADMIN){
         window.location.href="/admin/dashboard"
     }

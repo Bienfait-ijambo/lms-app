@@ -44,7 +44,7 @@ const searchCourse = __debounce(async function (event) {
         class="w-full h-40 object-cover rounded"
       />
       <div class="mt-3">
-        <h3 class="font-semibold text-lg">{{ course?.title }}</h3>
+        <h3 class="font-semibold text-lg mb-2">{{ course?.title }}</h3>
         <span class="bg-slate-100 px-2 py-1 rounded-full text-sm">{{ course?.category?.name }}</span>
         <div class="flex justify-between">
           <div>

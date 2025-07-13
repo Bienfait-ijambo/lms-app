@@ -1,0 +1,11 @@
+<svg classname="h-5 w-5" viewBox="0 0 24 24" fill="url(#star-gradient)" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="star-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60a5fa"></stop> <!-- blue-400 -->
+      <stop offset="100%" stop-color="#22d3ee"></stop> <!-- cyan-400 -->
+    </linearGradient>
+  </defs>
+
+  <!-- Replace this path with your actual star path from the uploaded SVG -->
+  <path d="M12 2l2.39 6.955h7.303l-5.912 4.29 2.392 6.957L12 15.91l-6.174 4.292 2.392-6.957L2.306 8.955h7.303z"></path>
+</svg>

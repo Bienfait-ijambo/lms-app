@@ -54,15 +54,42 @@ _______________
 - edit and reach 6 stop [stop]
 
 
-- contact Anthony
+
+add this in all layouts
+ <!-- <NuxtLoadingIndicator /> -->
+
+ 
+- display payment
+- dashboard
 
 
 
-//store payment (refer ecommerce)
-//create http req on front
-//track userId
-//check if user is authenticated [if not tell him to logged in]
-//check if user has already paid a course to view content()[create a layout]
-//add lock for locked chapters
-//format numbers
-// add a splatsh 
+
+
+
+
+
+
+
+
+
+
+
+if course free
+  //dont check payment
+  //dont lock chapters
+  //hide stripe element
+
+
+if course paid
+   //check if user has paid that course
+      
+      if not
+         //lock chapters
+         //show stripe element
+
+      else
+        //unlock chapters
+        //hide stripe element
+
+      

@@ -8,6 +8,7 @@ const courseStore = useCourseStore();
 const {
   singleCourseData,
   edit,
+  fetchLoading,
   showModal,
   courseInput,
   saveLoading,
@@ -18,25 +19,40 @@ const categoryStore = useCategoryStore();
 await categoryStore.fetchCategories();
 
 
-courseStore.fetchSingleCourse(route?.params?.slug).then(async(data) => {
+
+function updatePageData(){
+    courseStore.fetchSingleCourse(route?.params?.slug).then(async(data) => {
   courseInput.value.description = data?.course?.description;
   courseInput.value.id = data?.course?.id;
   await courseStore.fetchChapters(data?.course?.id);
 });
 
-function showEditModal(id,title,price) {
-  if (typeof id !== "undefined") {
-    edit.value = true;
-    courseInput.value.id = id;
-    courseInput.value.title = title;
-    courseInput.value.price = price;
+}
 
+function showEditModal(courseData) {
+
+  const course=courseData?.course
+  if (typeof course?.id !== "undefined") {
+    edit.value = true;
+    courseInput.value.id = course?.id;
+    courseInput.value.title = course?.title;
+    courseInput.value.price = course?.price;
+    courseInput.value.categoryId = course?.categoryId;
+    courseInput.value.status = course?.status;
+
+
+ 
     showModal.value = true;
     courseStore.appendUserIdPropValue();
   }
 }
 const config = useRuntimeConfig();
 const fallbackImage = config.public?.FALL_BACK_IMG_URL;
+
+onMounted(()=>{
+  updatePageData()
+})
+
 </script>
 
 <template>
@@ -51,6 +67,15 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
       
     </ClientOnly>
     <div class="grid grid-cols-12 gap-8 mb-10">
+       <button
+        @click="updatePageData"
+        title="Refresh table"
+        class="hover:bg-slate-200 text-gray-900 font-bold py-1 px-2 cursor-pointer rounded flex items-center gap-2"
+      >
+        <LoadingIcon v-if="fetchLoading" />
+
+        <RefreshIcon v-else />
+      </button>
       <div
         class="col-span-12 bg-white rounded-xl shadow-sm p-6 flex flex-col md:flex-row items-center gap-6"
       >
@@ -71,7 +96,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
           </p>
           <div class="flex items-center gap-4 text-sm text-gray-500">
             <span> {{ formatAmount(singleCourseData?.course?.price) }}</span>
-            <span>💻 {{chapters.length}} Chapiters</span>
+            <span>💻 {{chapters?.length}} Chapiters</span>
              <span
                     class="text-white px-2 py-1 bg-green-600 rounded-full text-sm font-semibold border border-green-600"
                   >
@@ -83,7 +108,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
           <div class="flex items-center gap-2 text-sm text-gray-500 mt-2">
             <button
               title="Edit course"
-              @click="showEditModal(singleCourseData?.course?.id,singleCourseData?.course?.title,singleCourseData?.course?.price)"
+              @click="showEditModal(singleCourseData)"
               class="hover:bg-slate-200 text-gray-900 font-bold px-2 py-2 cursor-pointer rounded flex items-center"
             >
               <EditIcon />
@@ -112,7 +137,7 @@ const fallbackImage = config.public?.FALL_BACK_IMG_URL;
           <div class="mb-2">
             <ClientOnly>
               <rich-editor
-                :value="courseInput.description"
+                :value="courseInput?.description"
                 @input="(event) => (courseInput.description = event)"
               />
             </ClientOnly>

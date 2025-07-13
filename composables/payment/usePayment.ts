@@ -5,6 +5,36 @@ export function usePayment() {
 
 
     const { user } = useUser()
+
+      const serverData = ref({})
+      const fetchLoading=ref(false)
+       const limit = ref(10)
+    const page = ref(1)
+
+       async function paginatePayments(currentPage:number){
+        page.value=currentPage
+        await fetchPayments()
+    }
+
+
+  async function fetchPayments() {
+    try {
+      fetchLoading.value = true
+      const { data } = await useFetch('/api/payment/payments')
+      serverData.value = data.value as any
+
+        limit.value = data.value?.metadata.limit as number
+            page.value = data.value?.metadata.page as number
+
+      fetchLoading.value = false
+
+    } catch (error) {
+      fetchLoading.value = false
+    }
+
+
+  }
+
     async function createPayment(courseId: string, price: string) {
 
         try {
@@ -32,6 +62,9 @@ export function usePayment() {
     }
 
     return {
+        fetchPayments,
+        serverData,
+        paginatePayments,
         user,
         createPayment
     }

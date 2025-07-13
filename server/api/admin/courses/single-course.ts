@@ -22,8 +22,7 @@ export default defineEventHandler(async (event) => {
                 category: true
             }
         });
-
-
+        
 
         if (!course) {
             throw createError({
@@ -40,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
     } catch (error) {
         throw createError({
-            message: "failed fetch course ",
+            message: "failed fetch course "+error?.message,
             statusCode: 500
         })
     }

@@ -11,8 +11,8 @@ const { isSignedIn, user, isLoaded } = useUser();
     <template #fallback>
       <RedirectToLogin />
     </template>
-     <NuxtLoadingIndicator />
-    <div class="flex  h-screen bg-gray-100 ">
+    <NuxtLoadingIndicator />
+    <div class="flex h-screen bg-gray-100">
       <!-- Sidebar -->
       <aside
         :class="[
@@ -26,14 +26,18 @@ const { isSignedIn, user, isLoaded } = useUser();
         <!-- Menu Items -->
         <nav class="mt-4 space-y-2">
           <MenuItem
+            icon="Dashboard"
+            label="Dashboard"
+            :collapsed="isCollapsed"
+          />
+
+          <MenuItem
             icon="Categories"
             label="Categories"
             :collapsed="isCollapsed"
           />
           <MenuItem icon="Courses" label="Courses" :collapsed="isCollapsed" />
-
-          <!-- <MenuItem icon="user" label="Profile" :collapsed="isCollapsed" />
-        <MenuItem icon="logout" label="Logout" :collapsed="isCollapsed" /> -->
+          <MenuItem icon="Payments" label="Payments" :collapsed="isCollapsed" />
         </nav>
       </aside>
 

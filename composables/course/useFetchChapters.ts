@@ -1,13 +1,13 @@
 
-
-
-export type ChapterType = Array<{
+export interface IChapter{
     id: string;
     title: string;
     courseId: string;
     slug: string;
     videoUrl: string | null;
 }
+
+export type ChapterType = Array<IChapter
 > | undefined  | null
 export function useFetchChapters() {
 

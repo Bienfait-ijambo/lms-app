@@ -5,7 +5,7 @@ import { generateSlug } from "~/utils/generateSlug";
 export default defineEventHandler(async (event) => {
     try {
 
-        const { title,categoryId,userId } = await readBody(event)
+        const { title,categoryId,userId,status } = await readBody(event)
 
 
         const result = createCourseSchema.safeParse({ title,categoryId,userId });
@@ -23,7 +23,8 @@ export default defineEventHandler(async (event) => {
                 title: title,
                 categoryId: categoryId,
                 userId: userId,
-                slug:slug
+                slug:slug,
+                status:status
             },
         });
 

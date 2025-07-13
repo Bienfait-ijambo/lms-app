@@ -19,7 +19,7 @@ async function submitInput() {
   const result = await v$.value.$validate();
   if (!result) return;
    courseStore.createOrUpdateChapter().then(async function(){
-    await courseStore.fetchChapters()
+    await courseStore.fetchChapters(chapterInput.value.courseId)
    });
   v$.value.$reset();
 }

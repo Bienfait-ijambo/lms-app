@@ -13,6 +13,9 @@ export function useFetchCourses(){
     
     const singleCourseData=ref({})
     const categoryFilter=ref([])
+    const {user}=useUser()
+
+    const checkCourseStatusData=ref({})
 
     async function paginateCourses(currentPage:number){
         page.value=currentPage
@@ -60,6 +63,30 @@ export function useFetchCourses(){
     }
 
 
+    async function fetchCourseStatus(slug:string){
+         try {
+            fetchLoading.value = true
+            const { data } = await useFetch('/api/admin/courses/check-course-status', {
+
+                query: {
+                    slug: slug,
+                    userId:user.value?.id
+                  
+                }
+            })
+            checkCourseStatusData.value = data.value as any
+          
+            fetchLoading.value = false
+            return data.value
+           
+
+        } catch (error) {
+            fetchLoading.value = false
+        }
+
+    }
+
+
     async function fetchSingleCourse(slug:string){
          try {
             fetchLoading.value = true
@@ -85,6 +112,8 @@ export function useFetchCourses(){
     return{
         paginateCourses,
         categoryFilter,
+        fetchCourseStatus,
+        checkCourseStatusData,
         fetchCourses,fetchLoading,serverData,search,fetchSingleCourse,singleCourseData
     }
 }
