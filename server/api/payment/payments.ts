@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
                         }
                     }
                 },
-                //1-1=0*10=0
                 skip: (page - 1) * limit,
                 take: limit,
 

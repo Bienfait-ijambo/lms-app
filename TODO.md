@@ -48,20 +48,18 @@ npx prisma migrate reset
 TO DO LIST
 _______________
 
-- payment (think and analyse what missed)
-- think about ai agent
-
-- edit and reach 6 stop [stop]
+- dashboard & secure admin endpoints
+- add AI form
 
 
 
-add this in all layouts
- <!-- <NuxtLoadingIndicator /> -->
+ AI Taks
+-----------
 
- 
-- display payment
-- dashboard
-
+- explain ai tasks
+- explain ai workflow
+- langchain langgraph installation
+- getting api[tavaly,embeddings,pinecone]
 
 
 
@@ -69,27 +67,3 @@ add this in all layouts
 
 
 
-
-
-
-
-
-
-if course free
-  //dont check payment
-  //dont lock chapters
-  //hide stripe element
-
-
-if course paid
-   //check if user has paid that course
-      
-      if not
-         //lock chapters
-         //show stripe element
-
-      else
-        //unlock chapters
-        //hide stripe element
-
-      
