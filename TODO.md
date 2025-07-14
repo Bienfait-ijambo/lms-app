@@ -48,7 +48,7 @@ npx prisma migrate reset
 TO DO LIST
 _______________
 
-- dashboard & secure admin endpoints
+- secure admin endpoints
 - add AI form
 
 

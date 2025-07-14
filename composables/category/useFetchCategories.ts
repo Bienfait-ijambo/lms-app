@@ -6,10 +6,16 @@ export function useFetchCategories() {
 
   const serverData = ref({})
 
+
+
   async function fetchCategories() {
     try {
       fetchLoading.value = true
-      const { data } = await useFetch('/api/admin/categories/get')
+      const { data } = await useFetch('/api/admin/categories/get',{
+        headers:{
+          Accept: "application/json",
+        }
+      })
       serverData.value = data.value as any
 
       fetchLoading.value = false

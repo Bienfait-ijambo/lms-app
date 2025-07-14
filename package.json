@@ -25,6 +25,7 @@
     "@vuelidate/validators": "^2.0.4",
     "chart.js": "^4.5.0",
     "ckeditor5": "^45.2.0",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.1",
     "nuxt": "^3.17.5",
     "pinia": "^3.0.3",
