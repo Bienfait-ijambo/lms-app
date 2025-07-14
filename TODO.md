@@ -49,13 +49,17 @@ TO DO LIST
 _______________
 
 - secure admin endpoints
-- add AI form
+- add faq questions
+- node project setup
+- theory intro
+- retrievers theory(langchain,langraph)
+- vector database [retrieving data]
+- db
 
 
 
  AI Taks
 -----------
-
 - explain ai tasks
 - explain ai workflow
 - langchain langgraph installation

@@ -1,18 +1,9 @@
 import prisma from "~/lib/prisma";
+import { secureEndpoint } from "~/utils/secureEndpoint";
 
 export default defineEventHandler(async (event) => {
     try {
 
-         const { userId } = event.context.auth()
-
-  // Protect the API route by checking if the user is signed in
-  if (!userId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized: No user ID provided',
-    })
-  }
-       
         const categories = await prisma.category.findMany();
         return {  categories }
 

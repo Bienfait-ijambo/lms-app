@@ -1,7 +1,8 @@
 import prisma from "~/lib/prisma";
 import {  updatecategorySchema } from "./modules/validateCategoryInput";
+import { secureEndpoint } from "~/utils/secureEndpoint";
 
-export default defineEventHandler(async (event) => {
+export default secureEndpoint(async (event) => {
     try {
 
         const { name,id } = await readBody(event)

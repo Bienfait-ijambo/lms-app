@@ -1,8 +1,9 @@
 import prisma from "~/lib/prisma";
 import { createCourseSchema } from "./modules/validateCourseInput";
 import { generateSlug } from "~/utils/generateSlug";
+import { secureEndpoint } from "~/utils/secureEndpoint";
 
-export default defineEventHandler(async (event) => {
+export default secureEndpoint(async (event) => {
     try {
 
         const { title,categoryId,userId,status } = await readBody(event)
