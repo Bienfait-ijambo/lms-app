@@ -17,7 +17,6 @@ await courseStore.fetchCourses();
   <div class="min-h-screen bg-gray-50 text-gray-800">
     <!-- Header -->
     <Header />
-    
 
     <div class="flex">
       <CategoryFilter :categories="serverData?.categories" />
@@ -27,6 +26,12 @@ await courseStore.fetchCourses();
 
         <CourseCard :courseData="courseData" />
       </main>
+
+      <ClientOnly>
+        <AIModal></AIModal>
+      </ClientOnly>
+  
+      <AskAI></AskAI>
     </div>
   </div>
 </template>
