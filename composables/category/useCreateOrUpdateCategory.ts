@@ -2,10 +2,10 @@ import { useFetchCategories } from "./useFetchCategories";
 
 
 
-export function useCreateOrUpdateCategory(){
+export function useCreateOrUpdateCategory() {
 
 
-      const categoryInput = ref({ id: null, name: "" });
+  const categoryInput = ref({ id: null, name: "" });
   const edit = ref(false)
   const saveLoading = ref(false)
 
@@ -14,8 +14,8 @@ export function useCreateOrUpdateCategory(){
 
   const showModal = ref(false)
   function toggleModal() {
-     categoryInput.value = {} as any
-     edit.value=false
+    categoryInput.value = {} as any
+    edit.value = false
     showModal.value = !showModal.value
   }
 
@@ -31,20 +31,20 @@ export function useCreateOrUpdateCategory(){
         body: JSON.stringify(categoryInput.value)
       })
       categoryInput.value = {} as any
-     
+
       successMsg(result?.message)
       edit.value = false
       saveLoading.value = false
 
     } catch (error) {
       saveLoading.value = false
-       showValidationErrors((error as Error))
+      showValidationErrors((error as Error))
 
     }
   }
 
 
-  return{
-     categoryInput, createOrUpdate,saveLoading,toggleModal,edit, showModal
+  return {
+    categoryInput, createOrUpdate, saveLoading, toggleModal, edit, showModal
   }
 }

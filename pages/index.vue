@@ -12,6 +12,12 @@ const { serverData } = storeToRefs(categoryStore);
 
 await categoryStore.fetchCategories();
 await courseStore.fetchCourses();
+
+
+// added
+
+
+
 </script>
 <template>
   <div class="min-h-screen bg-gray-50 text-gray-800">
@@ -29,9 +35,10 @@ await courseStore.fetchCourses();
 
       <ClientOnly>
         <AIModal></AIModal>
+        <AskAI></AskAI>
       </ClientOnly>
   
-      <AskAI></AskAI>
+      
     </div>
   </div>
 </template>
