@@ -36,7 +36,7 @@ function handleFileSelect(event) {
 </script>
 
 <template>
-  <div v-show="true"
+  <div v-show="false"
     className="fixed inset-0 z-[10000] ml-[20%] mr-[20%] shadow-md bg-gray-20 bg-opacity-75 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-300 ease-out">
     <div
       className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-4xl  md:w-3/3 transform transition-transform duration-300 ease-out scale-95 opacity-0 animate-modalFadeIn">
