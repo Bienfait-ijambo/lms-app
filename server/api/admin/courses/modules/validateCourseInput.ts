@@ -49,7 +49,7 @@ export const updateCourseDescriptionSchema = z.object({
   description: z.string({
     required_error: "Description is required",
     invalid_type_error: "Description must be in letters",
-  }).min(50, "Description Minimum 50 characters").max(500,'Description Maximum 500 characters'),
+  }).min(50, "Description Minimum 50 characters").max(20000,'Description Maximum 20000 characters'),
 
  
 });

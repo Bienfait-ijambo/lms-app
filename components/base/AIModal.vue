@@ -5,7 +5,7 @@ const props = defineProps(["show"]);
 
 
 const aiStore = useAIAssistantStore()
-const { messages, query, loading } = storeToRefs(aiStore)
+const { messages, query, loading,aiModal } = storeToRefs(aiStore)
 
 
 function toggleMenu() {
@@ -36,7 +36,7 @@ function handleFileSelect(event) {
 </script>
 
 <template>
-  <div v-show="false"
+  <div v-show="aiModal"
     className="fixed inset-0 z-[10000] ml-[20%] mr-[20%] shadow-md bg-gray-20 bg-opacity-75 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-300 ease-out">
     <div
       className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-4xl  md:w-3/3 transform transition-transform duration-300 ease-out scale-95 opacity-0 animate-modalFadeIn">
@@ -233,7 +233,7 @@ function handleFileSelect(event) {
       </div>
 
       <div className="flex gap-2 justify-end mt-4">
-        <BaseBtn :class="'secondary'" label="Close" />
+        <BaseBtn :class="'secondary'" label="Close"  @click="aiModal=false" />
       </div>
     </div>
   </div>

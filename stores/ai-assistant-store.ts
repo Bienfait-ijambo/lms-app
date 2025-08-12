@@ -6,6 +6,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 export const useAIAssistantStore = defineStore('ai-store', () => {
     const loading = ref(false)
     const query=ref()
+    const aiModal=ref(false)
     const messages = ref<{ type: 'ai' | 'human', id: string, message: string }[]>([])
     const data = ref<ResponseType>()
 
@@ -47,7 +48,7 @@ export const useAIAssistantStore = defineStore('ai-store', () => {
 
 
 
-    return { queryAssistant, data,query, loading, messages ,sendMessage}
+    return { queryAssistant, data,query, loading, messages ,sendMessage,aiModal}
 })
 
 

@@ -6,7 +6,7 @@
     </template> -->
     
     
-    <div class="bg-slate-200 h-screen">
+    <div class="bg-white h-screen">
       <slot />
     </div>
   <!-- </Protect> -->

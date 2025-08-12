@@ -32,12 +32,7 @@ await courseStore.fetchCourses();
 
         <CourseCard :courseData="courseData" />
       </main>
-
-      <ClientOnly>
-        <AIModal></AIModal>
-        <AskAI></AskAI>
-      </ClientOnly>
-  
+       
       
     </div>
   </div>
